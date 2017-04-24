@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="clearfix"></div>
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <div class="container box-login">
+        <label class="label label-danger">BETA</label>
+        <h1>BOLSA DE EMPLEO <small>V0.1</small></h1>
+        <form method="post" action="{{ path('comprobar') }}">
+            <label for="username">NIF/NIE: </label><input id="username" type="text" name="_username" class="form-control" required="required" placeholder="Introduzca su NIF o NIE" value="{{ ultimo_usuario }}" {% if not ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
+            <label for="password">CONTRASEÑA: </label><input id="password" type="password" name="_password" class="form-control" required="required" placeholder="Introduzca su contraseña" {% if ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
+            <a href="#">¿Ha olvidado su contraseña?</a><button type="submit" class="btn btn-success pull-right"><i class="fa fa-sign-in"></i> Entrar</button>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,631 @@
+<?php
+
+/**
+ * Created by: Jonathan Moya Moreno
+ */
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * @ORM\Entity
+ */
+class Usuario{
+
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $tipo_doc;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $num_identi;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $nombre;
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $apellidos;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $domicilio;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $poblacion;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $provincia;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $cod_postal;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $pais;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $movil;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $telefono;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $fax;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="date")
+     * @var \DateTime
+     */
+    private $fecha_nac;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $sexo;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $estado_civil;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $hijos;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $carne_conducir;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $clase_carne;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $vehiculo_propio;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $situ_laboral;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $disp_cambio_domicilio;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $disp_viajar;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $foto;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $horario_trabajo;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $pref_ocupacion;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTipoDoc()
+    {
+        return $this->tipo_doc;
+    }
+
+    /**
+     * @param string $tipo_doc
+     */
+    public function setTipoDoc($tipo_doc)
+    {
+        $this->tipo_doc = $tipo_doc;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumIdenti()
+    {
+        return $this->num_identi;
+    }
+
+    /**
+     * @param string $num_identi
+     */
+    public function setNumIdenti($num_identi)
+    {
+        $this->num_identi = $num_identi;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * @param string $nombre
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
+
+    /**
+     * @param string $apellidos
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDomicilio()
+    {
+        return $this->domicilio;
+    }
+
+    /**
+     * @param string $domicilio
+     */
+    public function setDomicilio($domicilio)
+    {
+        $this->domicilio = $domicilio;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPoblacion()
+    {
+        return $this->poblacion;
+    }
+
+    /**
+     * @param string $poblacion
+     */
+    public function setPoblacion($poblacion)
+    {
+        $this->poblacion = $poblacion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * @param string $provincia
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodPostal()
+    {
+        return $this->cod_postal;
+    }
+
+    /**
+     * @param string $cod_postal
+     */
+    public function setCodPostal($cod_postal)
+    {
+        $this->cod_postal = $cod_postal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPais()
+    {
+        return $this->pais;
+    }
+
+    /**
+     * @param string $pais
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMovil()
+    {
+        return $this->movil;
+    }
+
+    /**
+     * @param string $movil
+     */
+    public function setMovil($movil)
+    {
+        $this->movil = $movil;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * @param string $telefono
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * @param string $fax
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFechaNac()
+    {
+        return $this->fecha_nac;
+    }
+
+    /**
+     * @param \DateTime $fecha_nac
+     */
+    public function setFechaNac($fecha_nac)
+    {
+        $this->fecha_nac = $fecha_nac;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
+    /**
+     * @param string $sexo
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEstadoCivil()
+    {
+        return $this->estado_civil;
+    }
+
+    /**
+     * @param string $estado_civil
+     */
+    public function setEstadoCivil($estado_civil)
+    {
+        $this->estado_civil = $estado_civil;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHijos()
+    {
+        return $this->hijos;
+    }
+
+    /**
+     * @param bool $hijos
+     */
+    public function setHijos($hijos)
+    {
+        $this->hijos = $hijos;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCarneConducir()
+    {
+        return $this->carne_conducir;
+    }
+
+    /**
+     * @param bool $carne_conducir
+     */
+    public function setCarneConducir($carne_conducir)
+    {
+        $this->carne_conducir = $carne_conducir;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClaseCarne()
+    {
+        return $this->clase_carne;
+    }
+
+    /**
+     * @param string $clase_carne
+     */
+    public function setClaseCarne($clase_carne)
+    {
+        $this->clase_carne = $clase_carne;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVehiculoPropio()
+    {
+        return $this->vehiculo_propio;
+    }
+
+    /**
+     * @param bool $vehiculo_propio
+     */
+    public function setVehiculoPropio($vehiculo_propio)
+    {
+        $this->vehiculo_propio = $vehiculo_propio;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSituLaboral()
+    {
+        return $this->situ_laboral;
+    }
+
+    /**
+     * @param string $situ_laboral
+     */
+    public function setSituLaboral($situ_laboral)
+    {
+        $this->situ_laboral = $situ_laboral;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDispCambioDomicilio()
+    {
+        return $this->disp_cambio_domicilio;
+    }
+
+    /**
+     * @param bool $disp_cambio_domicilio
+     */
+    public function setDispCambioDomicilio($disp_cambio_domicilio)
+    {
+        $this->disp_cambio_domicilio = $disp_cambio_domicilio;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDispViajar()
+    {
+        return $this->disp_viajar;
+    }
+
+    /**
+     * @param bool $disp_viajar
+     */
+    public function setDispViajar($disp_viajar)
+    {
+        $this->disp_viajar = $disp_viajar;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * @param string $foto
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHorarioTrabajo()
+    {
+        return $this->horario_trabajo;
+    }
+
+    /**
+     * @param string $horario_trabajo
+     */
+    public function setHorarioTrabajo($horario_trabajo)
+    {
+        $this->horario_trabajo = $horario_trabajo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefOcupacion()
+    {
+        return $this->pref_ocupacion;
+    }
+
+    /**
+     * @param string $pref_ocupacion
+     */
+    public function setPrefOcupacion($pref_ocupacion)
+    {
+        $this->pref_ocupacion = $pref_ocupacion;
+    }
+
+}
