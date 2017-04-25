@@ -181,6 +181,48 @@ class Usuario{
     private $pref_ocupacion;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Formacion", mappedBy="usuario")
+     *
+     * @var Formacion
+     */
+    protected $formacion;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fcomplementaria", mappedBy="usuario")
+     *
+     * @var Fcomplementaria
+     */
+    protected $formacion_complem;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Laboral", mappedBy="usuario")
+     *
+     * @var Laboral
+     */
+    protected $laboral;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Oferta", mappedBy="usuario")
+     *
+     * @var Oferta
+     */
+    protected $oferta;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Idioma", mappedBy="usuario")
+     *
+     * @var Idioma
+     */
+    protected $idioma;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Informatica", mappedBy="usuario")
+     *
+     * @var Informatica
+     */
+    protected $informatica;
+
+    /**
      * @return int
      */
     public function getId()

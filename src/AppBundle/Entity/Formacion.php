@@ -5,6 +5,7 @@
  */
 
 namespace AppBundle\Entity;
+use AppBundle\Controller\UsuarioController;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
@@ -48,6 +49,13 @@ class Formacion{
      * @var string
      */
     private $nivel_academico;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="formacion")
+     *
+     * @var Usuario
+     */
+    protected $usuario;
 
     /**
      * @return int
