@@ -1,7 +1,6 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
@@ -10,22 +9,36 @@ security:
     encoders:
         AppBundle\Entity\Usuario: bcrypt
 
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        usuarios:
+            entity: { class: AppBundle\Entity\Usuario, property: num_identi }
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+        # the login page has to be accessible for everybody
+        entrada:
+            pattern:  ^/entrar$
+            security: false
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+        ayuda:
+            pattern:  ^/ayuda
+            security: false
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
 
+        # secures part of the application
+        area_protegida:
+            pattern:    ^/
+            # it's important to notice that in this case _demo_security_check and _demo_login
+            # are route names and that they are specified in the AcmeDemoBundle
 
             form_login:
                 login_path: entrar
@@ -33,7 +46,11 @@ security:
 
             logout:
                 path: salir
-                target: inicio
+                target: entrar
+
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
 
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
