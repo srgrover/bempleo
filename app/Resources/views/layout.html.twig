@@ -23,7 +23,7 @@
                             <li><a href="{{ path('salir') }}">{{ app.user.dni }} - Salir</a></li>
                         {% else %}
                             <li{% if ruta == 'entrar' %} class="active"{% endif %}><a href="{{ path('entrar') }}">Acceder</a></li>
-                            <li{% if ruta == 'registro' %} class="active"{% endif %}><a href="{{ path('entrar') }}">Registrarse</a></li>
+                            <li{% if ruta == 'registro' %} class="active"{% endif %}><a href="{{ path('registro') }}">Registrarse</a></li>
                         {% endif %}
                     </ul>
                 </div><!--/.nav-collapse -->

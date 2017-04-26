@@ -9,6 +9,9 @@
 namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,7 +33,7 @@ class RegisterType extends AbstractType
                     'class' => 'form-tipo-doc'
                 ]
             ])
-            ->add('password', 'password', [
+            ->add('password', PasswordType::class, [
                 'label' => 'Contraseña',
                 'required' => true
             ])
@@ -38,84 +41,84 @@ class RegisterType extends AbstractType
                 'label' => 'Nombre',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-nombre form-control'
+                    'class' => 'form-nombre'
                 ]
             ])
             ->add('apellidos', TextType::class, [
                 'label' => 'Apellidos',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-apellidos form-control'
+                    'class' => 'form-apellidos'
                 ]
             ])
             ->add('fechaNac', TextType::class, [
                 'label' => 'Fecha nacimiento',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-fechanac form-control'
+                    'class' => 'form-fechanac'
                 ]
             ])
             ->add('domicilio', TextType::class, [
                 'label' => 'Domicilio',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-domicilio form-control'
+                    'class' => 'form-domicilio'
                 ]
             ])
             ->add('poblacion', TextType::class, [
                 'label' => 'Población',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-poblacion form-control'
+                    'class' => 'form-poblacion'
                 ]
             ])
             ->add('provincia', TextType::class, [
                 'label' => 'Provincia',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-provincia form-control'
+                    'class' => 'form-provincia'
                 ]
             ])
             ->add('codPostal', TextType::class, [
                 'label' => 'Código Postal',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-cpostal form-control'
+                    'class' => 'form-cpostal'
                 ]
             ])
             ->add('pais', TextType::class, [
                 'label' => 'Pais',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-pais form-control'
+                    'class' => 'form-pais'
                 ]
             ])
             ->add('telefono', TextType::class, [
                 'label' => 'Telefono 1',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-tlf1 form-control'
+                    'class' => 'form-tlf1'
                 ]
             ])
             ->add('movil', TextType::class, [
                 'label' => 'Telefono 2',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-tlf2 form-control'
+                    'class' => 'form-tlf2'
                 ]
             ])
             ->add('fax', TextType::class, [
                 'label' => 'Fax',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-fax form-control'
+                    'class' => 'form-fax'
                 ]
             ])
             ->add('email', TextType::class, [
                 'label' => 'Email',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-email form-control'
+                    'class' => 'form-email'
                 ]
             ])
             ->add('hijos', ChoiceType::class, [
@@ -156,7 +159,7 @@ class RegisterType extends AbstractType
                 'label' => 'Clase carné de conducir',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-clase-carne form-control'
+                    'class' => 'form-clase-carne'
                 ]
             ])
             ->add('vehiculoPropio', ChoiceType::class, [
@@ -195,9 +198,28 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'class' => 'form-disp-viajar'
                 ]
+            ])
+            ->add('situLaboral', TextType::class, [
+                'label' => '* Situación laboral',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-situ-laboral'
+                ]
+            ])
+            ->add('horarioTrabajo', TextType::class, [
+                'label' => '* Horario de trabajo preferente',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-horario-trabajo'
+                ]
+            ])
+            ->add('prefOcupacion', TextAreaType::class, [
+                'label' => '* Preferencias de ocupación',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-pref-ocupacion'
+                ]
             ]);
-
-
     }
     /**
      * Returns the name of this type.

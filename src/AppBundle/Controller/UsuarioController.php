@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\RegisterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +29,35 @@ class UsuarioController extends Controller
      * @Route("/salir", name="salir")
      */
     public function comprobarAction() {
+    }
+
+
+    /**
+     * @Route("/registro", name="registro", methods={"GET", "POST"})
+     */
+    public function formAlumnoAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $usuario = new Usuario();
+        $em->persist($usuario);
+
+        $form = $this->createForm(RegisterType::class, $usuario);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                //return $this->redirectToRoute('listar_alumnado');
+            }
+            catch(Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render(':usuario:registro.html.twig', [
+            'usuario' => $usuario,
+            'formulario' => $form->createView()
+        ]);
     }
 
 
