@@ -38,6 +38,13 @@ class Informatica{
     private $programas_maneja;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="informatica")
+     *
+     * @var Usuario
+     */
+    protected $usuario;
+
+    /**
      * @return int
      */
     public function getId()

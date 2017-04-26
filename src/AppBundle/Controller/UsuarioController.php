@@ -5,16 +5,16 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UsuarioController extends Controller
 {
     /**
      * @Route("/entrar", name="entrar")
      */
-    public function LoginAction()
-    {
+    public function LoginAction(){
         $helper = $this->get('security.authentication_utils');
-        // replace this example code with whatever you need
+
         return $this->render(':usuario:login.html.twig', [
             'ultimo_usuario' => $helper->getLastUsername(),
             'error' => $helper->getLastAuthenticationError()

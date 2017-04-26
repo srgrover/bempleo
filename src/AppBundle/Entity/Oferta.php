@@ -38,6 +38,13 @@ class Oferta{
     private $inhabilitado;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="oferta")
+     *
+     * @var Usuario
+     */
+    protected $usuario;
+
+    /**
      * @return int
      */
     public function getId()

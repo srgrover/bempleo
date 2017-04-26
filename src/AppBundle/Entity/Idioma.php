@@ -44,6 +44,13 @@ class Idioma{
     private $escribe;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="idioma")
+     *
+     * @var Usuario
+     */
+    protected $usuario;
+
+    /**
      * @return int
      */
     public function getId()

@@ -44,6 +44,13 @@ class Fcomplementaria{
     private $anio;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="formacion_complem")
+     *
+     * @var Usuario
+     */
+    protected $usuario;
+
+    /**
      * @return int
      */
     public function getId()
