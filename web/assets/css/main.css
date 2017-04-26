@@ -1,3 +1,17 @@
+/* MAIN */
+.div-alert{
+    margin-top: 75px;
+}
+
+/* NAV */
+.navbar-brand{
+    padding-top: 0;
+}
+
+.navbar-brand img{
+    width: 650px;
+}
+
 /* LOGIN */
 
 .box-login{
@@ -9,6 +23,7 @@
     font-weight: bold;
     text-shadow: 2px 1px 2px grey;
     letter-spacing: -2.5px;
+    margin-top: 0;
 }
 
 .box-login small{
@@ -24,4 +39,8 @@
 }
 .box-login a{
     color: aliceblue;
+}
+
+.box-login .label-beta{
+    margin-left: 85%;
 }

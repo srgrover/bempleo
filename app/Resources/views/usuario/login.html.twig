@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 {% endblock %}
 {% block content %}
     <div class="clearfix"></div>
@@ -10,13 +10,19 @@
         </div>
     {% endif %}
     <div class="container box-login">
-        <label class="label label-danger">BETA</label>
+        <label class="label label-danger label-beta">BETA</label>
         <h1>BOLSA DE EMPLEO <small>V0.1</small></h1>
         <form method="post" action="{{ path('comprobar') }}">
-            <label for="username">NIF/NIE: </label><input id="username" type="text" name="_username" class="form-control" required="required" placeholder="Introduzca su NIF o NIE" value="{{ ultimo_usuario }}" {% if not ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
+            <label for="username">IDENTIFICACIÓN: </label><input id="username" type="text" name="_username" class="form-control" required="required" placeholder="Introduzca su número de identificación" value="{{ ultimo_usuario }}" {% if not ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
             <label for="password">CONTRASEÑA: </label><input id="password" type="password" name="_password" class="form-control" required="required" placeholder="Introduzca su contraseña" {% if ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
             <a href="#">¿Ha olvidado su contraseña?</a><button type="submit" class="btn btn-success pull-right"><i class="fa fa-sign-in"></i> Entrar</button>
         </form>
+        <label class="label label-info"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="IDENTIFICACIÓN: Introduce tu número de identificación (NIF, NIE, PASAPORTE o TARJETA RESIDENCIA)">
+            <i class="fa fa-info-circle"></i> Ayuda
+        </label>
     </div>
 
 {% endblock %}
