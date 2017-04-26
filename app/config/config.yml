@@ -41,9 +41,6 @@ twig:
     form_themes:
       - "bootstrap_3_horizontal_layout.html.twig"
 
-    form:
-        resources: ['bootstrap_3_horizontal_layout.html.twig']
-
 # Doctrine Configuration
 doctrine:
     dbal:
