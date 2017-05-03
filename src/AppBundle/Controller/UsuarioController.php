@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Formacion;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\RegisterType;
 use Doctrine\ORM\EntityManager;
@@ -9,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UsuarioController extends Controller
@@ -33,14 +36,20 @@ class UsuarioController extends Controller
     public function comprobarAction() {
     }
 
+    /**
+     * @Route("/registro", name="registro")
+     */
+    public function registroAction() {
+        return $this->redirectToRoute('registro_personal');
+    }
+
 
     /**
-     * @Route("/registro", name="registro", methods={"GET", "POST"})
+     * @Route("/registro/datos-personales", name="registro_personal", methods={"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroAction(Request $request)
-    {
+    public function RegistroPersonalAction(Request $request){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = new Usuario();
@@ -52,14 +61,44 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                //return $this->redirectToRoute('listar_alumnado');
+
+                return $this->redirectToRoute('entrar');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render(':usuario:registro.html.twig', [
+        return $this->render(':usuario:registro_personal.html.twig', [
             'usuario' => $usuario,
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/registro/formacion", name="registro_formacion", methods={"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function RegistroFormacionAction(Request $request){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $formacion = new Formacion();
+        $em->persist($formacion);
+
+        $form = $this->createForm(RegisterType::class, $formacion);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('registro_complementaria');
+            }
+            catch(Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render(':usuario:registro_formacion.html.twig', [
+            'formacion' => $formacion,
             'formulario' => $form->createView()
         ]);
     }
@@ -89,4 +128,22 @@ class UsuarioController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    //Asignar nombre a formulario
+//    public function acmeAction(){
+//        $acme = new Acme();
+//        $form = $this->get('form.factory')
+//            ->createNamedBuilder(new AcmeType(), 'acme_form', $acme)
+//            ->getForm();
+//        $request = $this->getRequest();
+//
+//        if ($request->getMethod() == 'POST' && $request->request->has('acme_form')) {
+//            $form->bindRequest($request);
+//            if($form->isValid())
+//            {
+//                //do something
+//            }
+//        }
+//        //return something
+//    }
 }

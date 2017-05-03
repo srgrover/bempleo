@@ -33,6 +33,14 @@ security:
             pattern:  ^/registro
             security: false
 
+        registro-pers:
+            pattern:  ^/registro/datos-personales
+            security: false
+
+        registro-formac:
+            pattern:  ^/registro/formacion
+            security: false
+
         ayuda:
             pattern:  ^/ayuda
             security: false

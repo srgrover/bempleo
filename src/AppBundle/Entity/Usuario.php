@@ -6,6 +6,8 @@
 
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @ORM\Entity
  */
@@ -221,6 +223,38 @@ class Usuario{
      * @var Informatica
      */
     protected $informatica;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $admin;
+
+    //Implementacion de la interfaz de roles
+    public function equals(UserInterface $users){
+        return $this->getEmail()==$users->getUsername();
+    }
+
+    public function eraseCredentials() {
+        return false;
+    }
+
+    public function getRoles() {
+        $roles = ["ROLE_USER"];     //Todos los usuarios son ROLE_USER
+        if($this->isAdmin()){
+            $roles[] = "ROLE_ADMIN";
+        }
+        return $roles;
+    }
+
+    public function getUsername() {
+        return $this->getEmail();
+    }
+
+    public function getSalt() {
+        return false;
+    }
+    //Fin de la definicion de clases de la interface de roles
 
     /**
      * @return int
@@ -668,6 +702,118 @@ class Usuario{
     public function setPrefOcupacion($pref_ocupacion)
     {
         $this->pref_ocupacion = $pref_ocupacion;
+    }
+
+    /**
+     * @return Formacion
+     */
+    public function getFormacion()
+    {
+        return $this->formacion;
+    }
+
+    /**
+     * @param Formacion $formacion
+     */
+    public function setFormacion($formacion)
+    {
+        $this->formacion = $formacion;
+    }
+
+    /**
+     * @return Fcomplementaria
+     */
+    public function getFormacionComplem()
+    {
+        return $this->formacion_complem;
+    }
+
+    /**
+     * @param Fcomplementaria $formacion_complem
+     */
+    public function setFormacionComplem($formacion_complem)
+    {
+        $this->formacion_complem = $formacion_complem;
+    }
+
+    /**
+     * @return Laboral
+     */
+    public function getLaboral()
+    {
+        return $this->laboral;
+    }
+
+    /**
+     * @param Laboral $laboral
+     */
+    public function setLaboral($laboral)
+    {
+        $this->laboral = $laboral;
+    }
+
+    /**
+     * @return Oferta
+     */
+    public function getOferta()
+    {
+        return $this->oferta;
+    }
+
+    /**
+     * @param Oferta $oferta
+     */
+    public function setOferta($oferta)
+    {
+        $this->oferta = $oferta;
+    }
+
+    /**
+     * @return Idioma
+     */
+    public function getIdioma()
+    {
+        return $this->idioma;
+    }
+
+    /**
+     * @param Idioma $idioma
+     */
+    public function setIdioma($idioma)
+    {
+        $this->idioma = $idioma;
+    }
+
+    /**
+     * @return Informatica
+     */
+    public function getInformatica()
+    {
+        return $this->informatica;
+    }
+
+    /**
+     * @param Informatica $informatica
+     */
+    public function setInformatica($informatica)
+    {
+        $this->informatica = $informatica;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param bool $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
     }
 
 }

@@ -44,3 +44,42 @@
 .box-login .label-beta{
     margin-left: 85%;
 }
+
+/* RESGISTRO */
+
+.card-registro{
+    float: none;
+    margin: 0 auto;
+    margin-top: 75px;
+}
+
+.box-registro{
+    background-color: cadetblue;
+    border-radius: 5px;
+    padding: 35px 0 15px 25px;
+    margin-bottom: 25px;
+    float: none;
+    color: #FFFFFF;
+}
+
+.box-registro label,.box-registro input{
+    float: none;
+    display: block;
+}
+
+.box-registro input{
+    width: 100% !important;
+}
+
+
+.box-registro label{
+    width: 100% !important;
+    text-align: left !important;
+}
+
+.box-registro form{
+    width: 100%;
+}
+
+
+

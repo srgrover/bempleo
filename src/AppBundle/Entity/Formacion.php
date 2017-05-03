@@ -5,7 +5,6 @@
  */
 
 namespace AppBundle\Entity;
-use AppBundle\Controller\UsuarioController;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
