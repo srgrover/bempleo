@@ -7,9 +7,8 @@
     <title>{% block title %}Bolsa de empleo | Cámara de Comercio Linares{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
     {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -19,8 +18,10 @@
 </head>
 <body>
 {% block body %}{% endblock %}
-<script src="{{ asset('assets/jquery/jquery-1.12.4.min.js') }}"></script>
-<script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-{% block javascripts %}{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+{% endblock %}
 </body>
 </html>

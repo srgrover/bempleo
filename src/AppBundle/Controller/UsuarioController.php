@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\RegisterType;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UsuarioController extends Controller
 {
@@ -34,8 +36,10 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/registro", name="registro", methods={"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function formAlumnoAction(Request $request)
+    public function RegistroAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -63,10 +67,12 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/perfil", name="perfil")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cambiarPerfilAction(Request $request) {
         $usuario = $this->getUser();
-        $form = $this->createForm(ProfesorType::class, $usuario, [
+        $form = $this->createForm(RegisterType::class, $usuario, [
             'es_admin' => $this->isGranted('ROLE_ADMIN')
         ]);
         $form->handleRequest($request);
