@@ -29,6 +29,10 @@ security:
             pattern:  ^/entrar$
             security: false
 
+        registro:
+            pattern:  ^/registro
+            security: false
+
         ayuda:
             pattern:  ^/ayuda
             security: false
