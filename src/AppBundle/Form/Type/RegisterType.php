@@ -22,7 +22,7 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('tipoDoc', ChoiceType::class, [
-                'label' => 'Tipo Documento',
+                'label' => '* Tipo Documento',
                 'required' => true,
                 'choices'  => [
                     'NIF' => 'NIF',
@@ -34,68 +34,86 @@ class RegisterType extends AbstractType
                     'class' => 'form-tipo-doc'
                 ]
             ])
+            ->add('numIdenti', TextType::class, [
+                'label' => '* Número de identificación',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-num-identi'
+                ]
+            ])
             ->add('password', PasswordType::class, [
-                'label' => 'Contraseña',
+                'label' => '* Contraseña',
                 'required' => true
             ])
             ->add('nombre', TextType::class, [
-                'label' => 'Nombre',
+                'label' => '* Nombre',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-nombre'
                 ]
             ])
             ->add('apellidos', TextType::class, [
-                'label' => 'Apellidos',
+                'label' => '* Apellidos',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-apellidos'
                 ]
             ])
+            ->add('sexo', ChoiceType::class, [
+                'label' => '* Sexo',
+                'required' => true,
+                'choices'  => [
+                    'Hombre' => 'H',
+                    'Mujer' => 'M'
+                ],
+                'attr' => [
+                    'class' => 'form-sexo'
+                ]
+            ])
             ->add('fechaNac', BirthdayType::class, [
-                'label' => 'Fecha nacimiento',
+                'label' => '* Fecha nacimiento',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-fechanac'
                 ]
             ])
             ->add('domicilio', TextType::class, [
-                'label' => 'Domicilio',
+                'label' => '* Domicilio',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-domicilio'
                 ]
             ])
             ->add('poblacion', TextType::class, [
-                'label' => 'Población',
+                'label' => '* Población',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-poblacion'
                 ]
             ])
             ->add('provincia', TextType::class, [
-                'label' => 'Provincia',
+                'label' => '* Provincia',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-provincia'
                 ]
             ])
             ->add('codPostal', TextType::class, [
-                'label' => 'Código Postal',
+                'label' => '* Código Postal',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-cpostal'
                 ]
             ])
             ->add('pais', TextType::class, [
-                'label' => 'Pais',
+                'label' => '* Pais',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-pais'
                 ]
             ])
             ->add('telefono', TextType::class, [
-                'label' => 'Telefono 1',
+                'label' => '* Telefono 1',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-tlf1'

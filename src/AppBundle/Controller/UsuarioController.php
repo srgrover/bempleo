@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+//use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -62,7 +62,7 @@ class UsuarioController extends Controller
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
 
-                return $this->redirectToRoute('entrar');
+                return $this->redirectToRoute('registro_formacion', ['id' => $usuario->getId()]);
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
@@ -75,11 +75,11 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/registro/formacion", name="registro_formacion", methods={"GET", "POST"})
+     * @Route("/registro/formacion/{id}", name="registro_formacion", methods={"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroFormacionAction(Request $request){
+    public function RegistroFormacionAction(Request $request, Usuario $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $formacion = new Formacion();
@@ -91,7 +91,7 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_complementaria');
+                //return $this->redirectToRoute('registro_complementaria');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
