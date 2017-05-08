@@ -218,6 +218,25 @@ class RegisterType extends AbstractType
                     'class' => 'form-disp-viajar'
                 ]
             ])
+            ->add('nivelAcademico', ChoiceType::class, [
+                'label' => '* Nivel académico máximo',
+                'required' => true,
+                'choices'  => [
+                    'Doctorado' => 'Doctorado',
+                    'Licenciatura/Ing. superior' => 'Licenciatura/Ing. superior',
+                    'Diplomatura/Ing. técnico' => 'Diplomatura/Ing. técnico',
+                    'Ciclo formativo de grado superior o análogo' => 'Ciclo formativo de grado superior o análogo',
+                    'Ciclo formativo de grado medio o análogo' => 'Ciclo formativo de grado medio o análogo',
+                    'Bachillerato/BUP/COU' => 'Bachillerato/BUP/COU',
+                    'ESO/EGB o análogo' => 'ESO/EGB o análogo',
+                    'Garantía social' => 'Garantía social',
+                    'Certificado de profesionalidad' => 'Certificado de profesionalidad',
+                    'Otros' => 'Otros',
+                ],
+                'attr' => [
+                    'class' => 'form-nivel-acade'
+                ]
+            ])
             ->add('situLaboral', ChoiceType::class, [
                 'label' => '* Situación laboral',
                 'required' => true,
