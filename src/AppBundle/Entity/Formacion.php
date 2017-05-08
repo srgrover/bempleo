@@ -44,12 +44,6 @@ class Formacion{
     private $obtencion;
 
     /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    private $nivel_academico;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="formacion")
      *
      * @var Usuario
@@ -137,19 +131,19 @@ class Formacion{
     }
 
     /**
-     * @return string
+     * @return Usuario
      */
-    public function getNivelAcademico()
+    public function getUsuario()
     {
-        return $this->nivel_academico;
+        return $this->usuario;
     }
 
     /**
-     * @param string $nivel_academico
+     * @param Usuario $usuario
      */
-    public function setNivelAcademico($nivel_academico)
+    public function setUsuario($usuario)
     {
-        $this->nivel_academico = $nivel_academico;
+        $this->usuario = $usuario;
     }
 
 }

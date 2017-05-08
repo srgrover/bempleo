@@ -78,12 +78,14 @@ class UsuarioController extends Controller
     /**
      * @Route("/registro/formacion/{id}", name="registro_formacion", methods={"GET", "POST"})
      * @param Request $request
+     * @param Usuario $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function RegistroFormacionAction(Request $request, Usuario $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $formacion = new Formacion();
+        $formacion->setUsuario($id);
         $em->persist($formacion);
 
         $form = $this->createForm(FormacionType::class, $formacion);

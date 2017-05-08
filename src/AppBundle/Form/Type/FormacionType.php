@@ -43,7 +43,7 @@ class FormacionType extends AbstractType
                 ]
             ])
             ->add('obtencion', BirthdayType::class, [
-                'label' => 'Obtención',
+                'label' => 'Fecha de obtención (mm-aaaa)',
                 'required' => false,
                 'widget' => 'single_text',
                 // this is actually the default format for single_text

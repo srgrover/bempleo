@@ -150,6 +150,12 @@ class Usuario{
      * @ORM\Column(type="string")
      * @var string
      */
+    private $nivel_academico;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     private $situ_laboral;
 
     /**
@@ -606,6 +612,22 @@ class Usuario{
     public function setVehiculoPropio($vehiculo_propio)
     {
         $this->vehiculo_propio = $vehiculo_propio;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNivelAcademico()
+    {
+        return $this->nivel_academico;
+    }
+
+    /**
+     * @param string $nivel_academico
+     */
+    public function setNivelAcademico($nivel_academico)
+    {
+        $this->nivel_academico = $nivel_academico;
     }
 
     /**
