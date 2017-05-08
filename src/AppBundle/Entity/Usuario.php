@@ -81,7 +81,7 @@ class Usuario{
     private $pais;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $movil;
@@ -93,13 +93,13 @@ class Usuario{
     private $telefono;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $fax;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string" nullable=true)
      * @var string
      */
     private $email;
@@ -135,7 +135,7 @@ class Usuario{
     private $carne_conducir;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $clase_carne;
@@ -165,7 +165,7 @@ class Usuario{
     private $disp_viajar;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $foto;
@@ -228,7 +228,7 @@ class Usuario{
      * @ORM\Column(type="boolean")
      * @var boolean
      */
-    private $admin;
+    private $admin = false;
 
     //Implementacion de la interfaz de roles
     public function equals(UserInterface $users){

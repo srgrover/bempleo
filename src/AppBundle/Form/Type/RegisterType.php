@@ -8,6 +8,7 @@
  */
 namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -51,7 +52,7 @@ class RegisterType extends AbstractType
                     'class' => 'form-apellidos'
                 ]
             ])
-            ->add('fechaNac', TextType::class, [
+            ->add('fechaNac', BirthdayType::class, [
                 'label' => 'Fecha nacimiento',
                 'required' => true,
                 'attr' => [
@@ -146,7 +147,7 @@ class RegisterType extends AbstractType
             ])
             ->add('carneConducir', ChoiceType::class, [
                 'label' => 'Carné de conducir',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Si' => true,
                     'No' => false
@@ -164,7 +165,7 @@ class RegisterType extends AbstractType
             ])
             ->add('vehiculoPropio', ChoiceType::class, [
                 'label' => 'Vehículo propio',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Si' => true,
                     'No' => false
@@ -175,7 +176,7 @@ class RegisterType extends AbstractType
             ])
             ->add('dispCambioDomicilio', ChoiceType::class, [
                 'label' => '* Disponibilidad para cambiar de domicilio',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'No' => 'No',
                     'Si, dentro de la provincia' => 'Si, dentro de la provincia',
@@ -190,7 +191,7 @@ class RegisterType extends AbstractType
             ])
             ->add('dispViajar', ChoiceType::class, [
                 'label' => '* Disponibilidad para viajar',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Si' => true,
                     'No' => false
@@ -199,16 +200,30 @@ class RegisterType extends AbstractType
                     'class' => 'form-disp-viajar'
                 ]
             ])
-            ->add('situLaboral', TextType::class, [
+            ->add('situLaboral', ChoiceType::class, [
                 'label' => '* Situación laboral',
                 'required' => true,
+                'choices'  => [
+                    'Desempleado menos de un año' => 'Desempleado menos de un año',
+                    'Desempleado mas de un año' => 'Desempleado mas de un año',
+                    'Ocupado' => 'Ocupado',
+                    'Demandante de 1º empleo' => 'Demandante de 1º empleo',
+                    'Mejora de empleo' => 'Mejora de empleo'
+                ],
                 'attr' => [
-                    'class' => 'form-situ-laboral'
+                    'class' => 'form-sit-lab'
                 ]
             ])
-            ->add('horarioTrabajo', TextType::class, [
-                'label' => '* Horario de trabajo preferente',
+            ->add('horarioTrabajo', ChoiceType::class, [
+                'label' => '* Horario de trabajo',
                 'required' => true,
+                'choices'  => [
+                    'Completo' => 'Completo',
+                    'Parcial' => 'Parcial',
+                    'Tarde' => 'Tarde',
+                    'Mañana' => 'Mañana',
+                    'Indiferente' => 'Indiferente'
+                ],
                 'attr' => [
                     'class' => 'form-horario-trabajo'
                 ]
