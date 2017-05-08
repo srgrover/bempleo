@@ -60,6 +60,11 @@ class UsuarioController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $factory = $this->get("security.encoder_factory");
+                $encoder = $factory->getEncoder($usuario);
+                $password = $encoder->encodePassword($form->get("password")->getData(), $usuario->getSalt());
+                $usuario->setPassword($password);
+
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
 
