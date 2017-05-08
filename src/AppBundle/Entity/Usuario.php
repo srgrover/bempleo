@@ -99,7 +99,7 @@ class Usuario{
     private $fax;
 
     /**
-     * @ORM\Column(type="string" nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $email;
@@ -153,8 +153,8 @@ class Usuario{
     private $situ_laboral;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @var boolean
+     * @ORM\Column(type="string")
+     * @var string
      */
     private $disp_cambio_domicilio;
 
