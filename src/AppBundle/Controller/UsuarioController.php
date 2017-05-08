@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Formacion;
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\FormacionType;
 use AppBundle\Form\Type\RegisterType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -85,8 +86,9 @@ class UsuarioController extends Controller
         $formacion = new Formacion();
         $em->persist($formacion);
 
-        $form = $this->createForm(RegisterType::class, $formacion);
+        $form = $this->createForm(FormacionType::class, $formacion);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $em->flush();
