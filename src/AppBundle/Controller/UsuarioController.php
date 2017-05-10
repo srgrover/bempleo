@@ -4,9 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Fcomplementaria;
 use AppBundle\Entity\Formacion;
+use AppBundle\Entity\Idioma;
+use AppBundle\Entity\Laboral;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\FcomplementariaType;
 use AppBundle\Form\Type\FormacionType;
+use AppBundle\Form\Type\IdiomaType;
+use AppBundle\Form\Type\LaboralType;
 use AppBundle\Form\Type\RegisterType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -135,7 +139,7 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_formacion', ['id' => $id]);
+                return $this->redirectToRoute('registro_laboral', ['id' => $id]);
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
@@ -143,6 +147,102 @@ class UsuarioController extends Controller
         }
         return $this->render(':usuario:registro_formacion_complementaria.html.twig', [
             'fcomplementaria' => $fcomplementaria,
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/registro/laboral/{id}", name="registro_laboral", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Usuario $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function RegistroLaboralAction(Request $request, Usuario $id){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $laboral = new Laboral();
+        $laboral->setUsuario($id);
+        $em->persist($laboral);
+
+        $form = $this->createForm(LaboralType::class, $laboral);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('registro_idiomas', ['id' => $id]);
+            }
+            catch(Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render(':usuario:registro_laboral.html.twig', [
+            'laboral' => $laboral,
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/registro/idiomas/{id}", name="registro_idiomas", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Usuario $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function RegistroIdiomasAction(Request $request, Usuario $id){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $idioma = new Idioma();
+        $idioma->setUsuario($id);
+        $em->persist($idioma);
+
+        $form = $this->createForm(IdiomaType::class, $idioma);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('registro_informatica', ['id' => $id]);
+            }
+            catch(Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render(':usuario:registro_idiomas.html.twig', [
+            'idioma' => $idioma,
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/registro/informatica/{id}", name="registro_informatica", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Usuario $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function RegistroInformaticaAction(Request $request, Usuario $id){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $informatica = new Fcomplementaria();
+        $informatica->setUsuario($id);
+        $em->persist($informatica);
+
+        $form = $this->createForm(FcomplementariaType::class, $informatica);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('entrar');
+            }
+            catch(Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render(':usuario:registro_informatica.html.twig', [
+            'informatica' => $informatica,
             'formulario' => $form->createView()
         ]);
     }

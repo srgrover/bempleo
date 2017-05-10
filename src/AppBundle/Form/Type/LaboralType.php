@@ -27,11 +27,25 @@ class LaboralType extends AbstractType
                 ]
             ])
             ->add('actividad', ChoiceType::class, [
-                'label' => '* Sexo',
+                'label' => 'Actividad de la empresa',
                 'required' => false,
                 'choices'  => [
-                    'Hombre' => 'H',
-                    'Mujer' => 'M'
+                    'Ganadería y pesca' => 'Ganadería y pesca',
+                    'Energía y agua' => 'Energía y agua',
+                    'Industr. transformad.' => 'Industr. transformad.',
+                    'Productos industriales' => 'Productos industriales',
+                    'Administración pública' => 'Administración pública',
+                    'Comercio' => 'Comercio',
+                    'Construcción' => 'Construcción',
+                    'Educación' => 'Educación',
+                    'Hostelería' => 'Hostelería',
+                    'Inst. financieras, seguros' => 'Inst. financieras, seguros',
+                    'Servicios a empresas' => 'Servicios a empresas',
+                    'Sanidad' => 'Sanidad',
+                    'Servicios personales' => 'Servicios personales',
+                    'Serv. recreat. y culturales' => 'Serv. recreat. y culturales',
+                    'Serv. soc. y a la comunidad' => 'Serv. soc. y a la comunidad',
+                    'Turismo, transporte y comunicaciones' => 'Turismo, transporte y comunicaciones',
                 ],
                 'placeholder' => 'Selecciona una actividad',
                 'attr' => [
