@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Fcomplementaria;
 use AppBundle\Entity\Formacion;
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\FcomplementariaType;
 use AppBundle\Form\Type\FormacionType;
 use AppBundle\Form\Type\RegisterType;
 use Doctrine\ORM\EntityManager;
@@ -127,7 +128,7 @@ class UsuarioController extends Controller
         $fcomplementaria->setUsuario($id);
         $em->persist($fcomplementaria);
 
-        $form = $this->createForm(FormacionType::class, $fcomplementaria);
+        $form = $this->createForm(FcomplementariaType::class, $fcomplementaria);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
