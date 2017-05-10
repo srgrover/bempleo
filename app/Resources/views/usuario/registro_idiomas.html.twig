@@ -20,6 +20,10 @@
                             <i class="fa fa-arrow-right"></i>
                             Guardar y siguiente
                         </button>
+                        <a href="{{ path('registro_informatica', {'id' : app.request.get('id')}) }}" class="btn btn-warning pull-right">
+                            Omitir este paso
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
                 {{ form_end(formulario) }}

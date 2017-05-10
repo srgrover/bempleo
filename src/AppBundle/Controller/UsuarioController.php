@@ -114,7 +114,8 @@ class UsuarioController extends Controller
         }
         return $this->render(':usuario:registro_formacion.html.twig', [
             'formacion' => $formacion,
-            'formulario' => $form->createView()
+            'formulario' => $form->createView(),
+            'id_usuario' => $id
         ]);
     }
 
