@@ -89,10 +89,10 @@ class UsuarioController extends Controller
     /**
      * @Route("/registro/formacion/{id}", name="registro_formacion", methods={"GET", "POST"})
      * @param Request $request
-     * @param Usuario $id
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroFormacionAction(Request $request, Usuario $id){
+    public function RegistroFormacionAction(Request $request, $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $formacion = new Formacion();
@@ -115,7 +115,6 @@ class UsuarioController extends Controller
         return $this->render(':usuario:registro_formacion.html.twig', [
             'formacion' => $formacion,
             'formulario' => $form->createView(),
-            'id_usuario' => $id
         ]);
     }
 
@@ -123,10 +122,10 @@ class UsuarioController extends Controller
     /**
      * @Route("/registro/formacion/complementaria/{id}", name="registro_formacion_complementaria", methods={"GET", "POST"})
      * @param Request $request
-     * @param Usuario $id
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroComplementariaAction(Request $request, Usuario $id){
+    public function RegistroComplementariaAction(Request $request, $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $fcomplementaria = new Fcomplementaria();
@@ -155,10 +154,10 @@ class UsuarioController extends Controller
     /**
      * @Route("/registro/laboral/{id}", name="registro_laboral", methods={"GET", "POST"})
      * @param Request $request
-     * @param Usuario $id
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroLaboralAction(Request $request, Usuario $id){
+    public function RegistroLaboralAction(Request $request, $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $laboral = new Laboral();
@@ -187,10 +186,10 @@ class UsuarioController extends Controller
     /**
      * @Route("/registro/idiomas/{id}", name="registro_idiomas", methods={"GET", "POST"})
      * @param Request $request
-     * @param Usuario $id
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroIdiomasAction(Request $request, Usuario $id){
+    public function RegistroIdiomasAction(Request $request, $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $idioma = new Idioma();
@@ -219,10 +218,10 @@ class UsuarioController extends Controller
     /**
      * @Route("/registro/informatica/{id}", name="registro_informatica", methods={"GET", "POST"})
      * @param Request $request
-     * @param Usuario $id
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroInformaticaAction(Request $request, Usuario $id){
+    public function RegistroInformaticaAction(Request $request, $id){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $informatica = new Fcomplementaria();
