@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FormacionType extends AbstractType
+class FcomplementariaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,21 +32,20 @@ class FormacionType extends AbstractType
                     'class' => 'form-titulacion'
                 ]
             ])
-            ->add('especialidad', TextType::class, [
-                'label' => 'Especialidad',
+            ->add('horas', TextType::class, [
+                'label' => 'Horas',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-especialidad'
                 ]
             ])
-            ->add('obtencion', BirthdayType::class, [
-                'label' => 'Fecha de obtención (mm-aaaa)',
+            ->add('anio', BirthdayType::class, [
+                'label' => 'Año de obtención (aaaa)',
                 'required' => false,
                 'widget' => 'single_text',
-                // this is actually the default format for single_text
-                'format' => 'mm-yyyy',
+                'format' => 'yyyy',
                 'placeholder' => [
-                    'month' => 'Mes', 'year' => 'Año',
+                    'year' => 'ej. 2010',
                 ]
             ]);
     }
@@ -57,7 +56,7 @@ class FormacionType extends AbstractType
      */
     public function getName()
     {
-        return 'formacion';
+        return 'fcomplementaria';
     }
 
     /**
@@ -66,7 +65,7 @@ class FormacionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Formacion'
+            'data_class' => 'AppBundle\Entity\Fcomplementaria'
         ));
     }
     /**
@@ -74,6 +73,6 @@ class FormacionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_formacion';
+        return 'appbundle_fcomplementaria';
     }
 }

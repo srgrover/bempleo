@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Fcomplementaria;
 use AppBundle\Entity\Formacion;
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\FcomplementariaType;
 use AppBundle\Form\Type\FormacionType;
 use AppBundle\Form\Type\RegisterType;
 use Doctrine\ORM\EntityManager;
@@ -60,6 +62,11 @@ class UsuarioController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $factory = $this->get("security.encoder_factory");
+                $encoder = $factory->getEncoder($usuario);
+                $password = $encoder->encodePassword($form->get("password")->getData(), $usuario->getSalt());
+                $usuario->setPassword($password);
+
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
 
@@ -95,7 +102,7 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                //return $this->redirectToRoute('registro_complementaria');
+                return $this->redirectToRoute('registro_formacion_complementaria', ['id' => $id]);
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
@@ -103,6 +110,39 @@ class UsuarioController extends Controller
         }
         return $this->render(':usuario:registro_formacion.html.twig', [
             'formacion' => $formacion,
+            'formulario' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/registro/formacion/complementaria/{id}", name="registro_formacion_complementaria", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Usuario $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function RegistroComplementariaAction(Request $request, Usuario $id){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $fcomplementaria = new Fcomplementaria();
+        $fcomplementaria->setUsuario($id);
+        $em->persist($fcomplementaria);
+
+        $form = $this->createForm(FcomplementariaType::class, $fcomplementaria);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('registro_formacion', ['id' => $id]);
+            }
+            catch(Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render(':usuario:registro_formacion_complementaria.html.twig', [
+            'fcomplementaria' => $fcomplementaria,
             'formulario' => $form->createView()
         ]);
     }
