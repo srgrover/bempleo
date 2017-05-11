@@ -33,7 +33,7 @@
     <div class="container box-perfil col-lg-12">
         <div class="container col-lg-3 card-principal box-avatar">
             <div class="avatar">
-                <a href="#">
+                <a href="#" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-edit"></i>
                 </a>
                 {% if usuario.foto == null %}
@@ -43,6 +43,25 @@
                 {% endif %}
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Escoge una imagen de perfil</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
         <div class="col-lg-1"></div>
         <div class="container col-lg-8 card-principal">
             <div class="col-lg-10">
@@ -51,7 +70,7 @@
                 </h1>
             </div>
             <div class="col-lg-2 edit-action">
-                <a href="#">
+                <a href="#" class="btn btn-info">
                     <i class="fa fa-edit"></i>
                     Editar
                 </a>
@@ -167,15 +186,15 @@
         </div>
         <div class="col-lg-12">
             <div class="container col-lg-6 card-principal">
-                <div class="col-lg-10">
+                <div class="col-lg-9">
                     <h1 class="card-header">
                         Formación académica
                     </h1>
                 </div>
-                <div class="col-lg-2 edit-action">
-                    <a href="#">
-                        <i class="fa fa-edit"></i>
-                        Editar
+                <div class="col-lg-3 edit-action">
+                    <a href="#" class="btn btn-success">
+                        <i class="fa fa-plus"></i>
+                        Añadir
                     </a>
                 </div>
 
@@ -190,9 +209,9 @@
                     </h1>
                 </div>
                 <div class="col-lg-3 edit-action">
-                    <a href="#">
-                        <i class="fa fa-edit"></i>
-                        Editar
+                    <a href="#" class="btn btn-success">
+                        <i class="fa fa-plus"></i>
+                        Añadir
                     </a>
                 </div>
 

@@ -23,7 +23,7 @@ hr {
 .card-header{
     color: #555;
     margin-bottom: 0;
-
+    font-size: 30px;
 
 }
 
@@ -152,9 +152,9 @@ hr {
 .edit-action a{
     font-size: 17px;
     position: absolute;
-    color: #66afe9;
     text-decoration: none;
     display: none;
+    color: #FFFFFF;
 }
 
 .card-header a:hover{
