@@ -1,5 +1,25 @@
 {% extends 'layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.avatar').mouseenter(function () {
+                $('.avatar a').css("display","initial");
+            }).mouseleave(function () {
+                $('.avatar a').css("display","none");
+            });
+
+
+            $('.card-principal').unbind("mouseenter").mouseenter(function () {
+                $(this).children().find('.card-header a').css("display","initial");
+            }).unbind("mouseleave").mouseleave(function () {
+                $(this).children().find('.card-header a').css("display","none");
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="clearfix"></div>
     {#{% if error %}#}
@@ -10,8 +30,156 @@
             {#{{ error.messageKey|trans(error.messageData, 'security') }}#}
         {#</div>#}
     {#{% endif %}#}
-    <div class="container box-perfil" style="margin-top: 80px">
-        <img src="" alt="">
+    <div class="container box-perfil col-lg-12">
+        <div class="container col-lg-3 card-principal box-avatar">
+            <div class="avatar">
+                <a href="#">
+                    <i class="fa fa-edit"></i>
+                </a>
+                {% if usuario.foto == null %}
+                    <img src="{{ asset('assets/images/perfil-default.png') }}" alt="avatar" />
+                {% else %}
+                    <img src="{{ asset('uploads/users/'~usuario.foto) }}" alt="avatar" />
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="container col-lg-8 card-principal">
+            <div class="col-lg-10">
+                <h1 class="card-header">
+                    Datos personales
+                </h1>
+            </div>
+            <div class="col-lg-2 edit-action">
+                <a href="#">
+                    <i class="fa fa-edit"></i>
+                    Editar
+                </a>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr>
+
+            <div class="container col-lg-12 card-body">
+                <div class="col-lg-4 card-item">
+                    <span>
+                        {{ usuario.nombre }} {{ usuario.apellidos }}
+                    </span>
+                    {% set diferencia = usuario.fechaNac.diff(date('now')) %}
+                    {% set edad = (diferencia.days/365)|number_format(0, '.', ',') %}
+                    <span>
+                        {{ usuario.fechaNac | date('d/M/Y') }} - {{ edad }} años
+                    </span>
+                    {% if usuario.email != null %}
+                        <span>
+                            {{ usuario.email }}
+                        </span>
+                    {% else %}
+                        <span class="label label-warning">
+                            No tienes un email
+                        </span>
+                    {% endif %}
+                    <span>
+                        {{ usuario.telefono }}
+                    </span>
+                    {% if usuario.movil != null %}
+                        <span>
+                            {{ usuario.movil }}
+                        </span>
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 card-item">
+                    <span>
+                        {{ usuario.domicilio }}
+                    </span>
+                    <span>
+                        {{ usuario.codPostal }}, {{ usuario.poblacion }} ({{ usuario.provincia }})
+                    </span>
+                    <span>
+                        {{ usuario.pais }}
+                    </span>
+                </div>
+                <div class="col-lg-4 card-item">
+                    <span>
+                        {{ usuario.situLaboral }}
+                    </span>
+                    <span>
+                        {% if usuario.sexo == "H" %}
+                            Hombre,
+                        {% else %}
+                            Mujer,
+                        {% endif %}
+                        {{ usuario.estadoCivil }}
+                        {% if usuario.hijos %}
+                            con hijos
+                        {% else %}
+                            sin hijos
+                        {% endif %}
+                    </span>
+                    {% if usuario.carneConducir %}
+                        <span>
+                            Carné de conducir,
+                            {% if usuario.claseCarne != null %}
+                                Clase {{ usuario.claseCarne }}
+                            {% else %}
+                                sin hijos
+                            {% endif %}
+                        </span>
+                    {% else %}
+                        <span>
+                            Sin carné de conducir
+                        </span>
+                    {% endif %}
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+                <div class="col-lg-4 card-item">
+                    {% if usuario.vehiculoPropio %}
+                        <span>
+                            Vehiculo propio
+                        </span>
+                    {% endif %}
+                    <span>
+                        {% if usuario.dispViajar %}
+                            Disponibilidad para viajar
+                        {% else %}
+                            No disponible para viajar
+                        {% endif %}
+                    </span>
+                    <span>
+                        Preferencias: {{ usuario.prefOcupacion }}
+                    </span>
+                </div>
+                <div class="col-lg-8 card-item">
+                    <span>
+                        Nivel de formación: {{ usuario.nivelAcademico }}
+                    </span>
+                    <span>
+                        Disponibilidad para cambiar de domicilio:
+                        {% if usuario.dispCambioDomicilio != null %}
+                            {{ usuario.dispCambioDomicilio }}
+                        {% endif %}
+                    </span>
+                    <span>
+                        Horario de trabajo {{ usuario.horarioTrabajo }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="container col-lg-6 card-principal">
+                <h1 class="card-header">
+                    Formación académica
+                </h1>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="container col-lg-5 card-principal">
+                <h1 class="card-header">
+                    Complementaria
+                </h1>
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}

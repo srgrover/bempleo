@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
+
 //use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -254,11 +256,16 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/perfil", name="perfil")
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function cambiarPerfilAction(Request $request) {
-//        $usuario = $this->getUser();
+    public function cambiarPerfilAction() {
+        $usuario = $this->getUser();
+
+        if(empty($usuario) || !is_object($usuario)){
+            return $this->redirectToRoute('entrar');
+        }
+
 //        $form = $this->createForm(RegisterType::class, $usuario, [
 //            'admin' => $this->isGranted('ROLE_ADMIN')
 //        ]);
@@ -272,7 +279,10 @@ class UsuarioController extends Controller
 //            }
 //            $this->getDoctrine()->getManager()->flush();
 //        }
+
+
         return $this->render('usuario/perfil.html.twig', [
+            'usuario' => $usuario,
 //            'form' => $form->createView()
         ]);
     }

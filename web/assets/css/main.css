@@ -1,6 +1,30 @@
 /* MAIN */
+body{
+    background-color: #EFEFEF;
+}
+
+hr {
+    margin: 15px 0;
+}
+
 .div-alert{
     margin-top: 60px;
+}
+
+.card-principal{
+    background-color: #FEFEFE;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    white-space: normal;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+}
+
+.card-header{
+    color: #555;
+    margin-bottom: 0;
+
+
 }
 
 /* NAV */
@@ -49,8 +73,7 @@
 
 .card-registro{
     float: none;
-    margin: 0 auto;
-    margin-top: 75px;
+    margin: 75px auto 0;
 }
 
 .box-registro{
@@ -81,5 +104,59 @@
     width: 100%;
 }
 
+/* PERFIL */
 
+.box-perfil{
+    margin-top: 80px;
+}
 
+.box-perfil .avatar{
+    background: #FFFFFF;
+    border-radius: 50%;
+    width: 230px;
+    height: 230px;
+    overflow: hidden;
+    border: 6px solid rgba(70, 70, 70, 1);
+}
+
+.box-perfil .avatar img{
+    height: 100%;
+    text-align: center;
+}
+
+.avatar a{
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    height: 218px;
+    width: 218px;
+    font-size: 100px;
+    position: absolute;
+    color: #66afe9;
+    text-align: center;
+    padding-top: 70px;
+    display: none;
+    text-decoration: none;
+}
+
+.box-avatar{
+    padding: 25px;
+}
+
+.card-item span{
+    display: block;
+    font-size: 15px;
+    color: #665665;
+    margin-bottom: 5px;
+}
+
+.card-header a{
+    font-size: 17px;
+    position: absolute;
+    color: #66afe9;
+    text-decoration: none;
+    display: none;
+}
+
+.card-header a:hover{
+    text-decoration: underline;
+}
