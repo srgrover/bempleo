@@ -149,7 +149,7 @@ hr {
     margin-bottom: 5px;
 }
 
-.card-header a{
+.edit-action a{
     font-size: 17px;
     position: absolute;
     color: #66afe9;
@@ -159,4 +159,8 @@ hr {
 
 .card-header a:hover{
     text-decoration: underline;
+}
+
+.edit-action{
+    margin-top: 10px;
 }

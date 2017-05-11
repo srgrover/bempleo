@@ -12,9 +12,9 @@
 
 
             $('.card-principal').unbind("mouseenter").mouseenter(function () {
-                $(this).children().find('.card-header a').css("display","initial");
+                $(this).find('.edit-action a').css("display","initial");
             }).unbind("mouseleave").mouseleave(function () {
-                $(this).children().find('.card-header a').css("display","none");
+                $(this).find('.edit-action a').css("display","none");
             });
         });
     </script>
@@ -56,7 +56,6 @@
                     Editar
                 </a>
             </div>
-
             <div class="clearfix"></div>
             <hr>
 
@@ -168,15 +167,37 @@
         </div>
         <div class="col-lg-12">
             <div class="container col-lg-6 card-principal">
-                <h1 class="card-header">
-                    Formación académica
-                </h1>
+                <div class="col-lg-10">
+                    <h1 class="card-header">
+                        Formación académica
+                    </h1>
+                </div>
+                <div class="col-lg-2 edit-action">
+                    <a href="#">
+                        <i class="fa fa-edit"></i>
+                        Editar
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
             </div>
             <div class="col-lg-1"></div>
             <div class="container col-lg-5 card-principal">
-                <h1 class="card-header">
-                    Complementaria
-                </h1>
+                <div class="col-lg-9">
+                    <h1 class="card-header">
+                        Complementaria
+                    </h1>
+                </div>
+                <div class="col-lg-3 edit-action">
+                    <a href="#">
+                        <i class="fa fa-edit"></i>
+                        Editar
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
             </div>
         </div>
 
