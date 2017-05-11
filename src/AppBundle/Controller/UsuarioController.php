@@ -27,6 +27,10 @@ class UsuarioController extends Controller
      * @Route("/entrar", name="entrar")
      */
     public function LoginAction(){
+        if(is_object($this->getUser())){        //El usuario está logueado
+            return $this->redirect('perfil');
+        }
+
         $helper = $this->get('security.authentication_utils');
 
         return $this->render(':usuario:login.html.twig', [
@@ -106,7 +110,7 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_formacion_complementaria', ['id' => $id]);
+                return $this->redirectToRoute('registro_formacion_complementaria', ['id' => (int)$id]);
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
@@ -254,22 +258,22 @@ class UsuarioController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cambiarPerfilAction(Request $request) {
-        $usuario = $this->getUser();
-        $form = $this->createForm(RegisterType::class, $usuario, [
-            'es_admin' => $this->isGranted('ROLE_ADMIN')
-        ]);
-        $form->handleRequest($request);
-        if ($form->isValid() && $form->isSubmitted()) {
-            $claveFormulario = $form->get('nueva')->get('first')->getData();
-            if ($claveFormulario) {
-                $clave = $this->get('security.password_encoder')
-                    ->encodePassword($usuario, $claveFormulario);
-                $usuario->setClave($clave);
-            }
-            $this->getDoctrine()->getManager()->flush();
-        }
+//        $usuario = $this->getUser();
+//        $form = $this->createForm(RegisterType::class, $usuario, [
+//            'admin' => $this->isGranted('ROLE_ADMIN')
+//        ]);
+//        $form->handleRequest($request);
+//        if ($form->isValid() && $form->isSubmitted()) {
+//            $claveFormulario = $form->get('nueva')->get('first')->getData();
+//            if ($claveFormulario) {
+//                $clave = $this->get('security.password_encoder')
+//                    ->encodePassword($usuario, $claveFormulario);
+//                $usuario->setClave($clave);
+//            }
+//            $this->getDoctrine()->getManager()->flush();
+//        }
         return $this->render('usuario/perfil.html.twig', [
-            'form' => $form->createView()
+//            'form' => $form->createView()
         ]);
     }
 

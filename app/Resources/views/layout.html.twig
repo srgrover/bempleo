@@ -20,10 +20,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}
                             <li><a href="{{ path('perfil') }}"><i class="fa fa-user"></i> Mi perfil</a></li>
-                            <li><a href="{{ path('salir') }}">{{ app.user.dni }} - Salir</a></li>
+                            <li><a href="{{ path('salir') }}">{{ app.user.numIdenti }} - Salir</a></li>
                         {% else %}
                             <li{% if ruta == 'entrar' %} class="active"{% endif %}><a href="{{ path('entrar') }}">Acceder</a></li>
-                            <li{% if ruta == 'registro_personal' or ruta =="registro_formacion" %} class="active"{% endif %}><a href="{{ path('registro') }}">Registrarse</a></li>
+                            <li{% if ruta == 'registro_personal' or ruta =="registro_formacion" or ruta =="registro_formacion_complementaria" or ruta =="registro_laboral" or ruta =="registro_idioma" or ruta =="registro_informatica" %} class="active"{% endif %}><a href="{{ path('registro') }}">Registrarse</a></li>
                         {% endif %}
                     </ul>
                 </div><!--/.nav-collapse -->

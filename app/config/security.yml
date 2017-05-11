@@ -7,8 +7,10 @@ security:
             cost: 4
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        user_db_provider:
+            entity:
+                class: AppBundle:Usuario
+                property: num_identi
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -24,6 +26,16 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        main:
+            anonymous: ~
+            provider: user_db_provider
+            form_login:
+                login_path: /entrar
+                check_path: /comprobar
+            logout:
+                path: salir
+                target: /entrar
 
         # the login page has to be accessible for everybody
         entrada:

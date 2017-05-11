@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  */
-class Usuario{
+class Usuario implements UserInterface{
 
     /**
      * @ORM\Id
