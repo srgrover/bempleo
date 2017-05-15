@@ -17,10 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\DateTime;
-
+//use Symfony\Component\Validator\Constraints\DateTime;
 //use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UsuarioController extends Controller
@@ -260,11 +258,45 @@ class UsuarioController extends Controller
      * @internal param Request $request
      */
     public function cambiarPerfilAction() {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
         $usuario = $this->getUser();
 
         if(empty($usuario) || !is_object($usuario)){
             return $this->redirectToRoute('entrar');
         }
+
+        $formacion_usuario = $em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:Formacion', 'f')
+            ->where('f.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
+        $complementaria_usuario = $em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:Fcomplementaria', 'f')
+            ->where('f.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
+        $laboral_usuario = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Laboral', 'l')
+            ->where('l.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
+        $idiomas_usuario = $em->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Idioma', 'i')
+            ->where('i.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
 
 //        $form = $this->createForm(RegisterType::class, $usuario, [
 //            'admin' => $this->isGranted('ROLE_ADMIN')
@@ -283,6 +315,10 @@ class UsuarioController extends Controller
 
         return $this->render('usuario/perfil.html.twig', [
             'usuario' => $usuario,
+            'formacion' => $formacion_usuario,
+            'complementaria' => $complementaria_usuario,
+            'laboral' => $laboral_usuario,
+            'idiomas' => $idiomas_usuario,
 //            'form' => $form->createView()
         ]);
     }

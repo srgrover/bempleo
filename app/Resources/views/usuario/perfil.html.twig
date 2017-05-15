@@ -191,7 +191,7 @@
                         Formación académica
                     </h1>
                 </div>
-                <div class="col-lg-3 edit-action">
+                <div class="col-lg-2 edit-action">
                     <a href="#" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                         Añadir
@@ -200,6 +200,32 @@
 
                 <div class="clearfix"></div>
                 <hr>
+
+                <div class="container col-lg-12 card-body">
+                    {% if formacion|length > 0 %}
+                        {% for item in formacion %}
+                            <div class="col-lg-12 card-item">
+                                <span>
+                                    Titulado en {{ item.titulacion }} en la especialidad de {{ item.especialidad }} en el centro {{ item.nombreCentro }}
+                                </span>
+                                <span>
+                                    Obtenido el {{ item.obtencion|date('d/m/Y') }}
+                                </span>
+                                <span>
+                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                </span>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-lg-12 card-item">
+                            <h4 class="text-center">Aún no has añadido una formación</h4>
+                        </div>
+                    {% endif %}
+                </div>
+
             </div>
             <div class="col-lg-1"></div>
             <div class="container col-lg-5 card-principal">
@@ -217,8 +243,178 @@
 
                 <div class="clearfix"></div>
                 <hr>
+                <div class="container col-lg-12 card-body">
+                    {% if complementaria|length > 0 %}
+                        {% for item in complementaria %}
+                            <div class="col-lg-12 card-item">
+                                <span>
+                                    Titulado en {{ item.titulacion }} en el centro {{ item.nombreCentro }} - {{ item.horas }} horas
+                                </span>
+                                <span>
+                                    Obtenido en {{ item.anio }}
+                                </span>
+                                <span>
+                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                </span>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-lg-12 card-item">
+                            <h4 class="text-center">Aún no as añadido formación complementaria</h4>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container col-lg-12 card-principal">
+                <div class="col-lg-10">
+                    <h1 class="card-header">
+                        Experiencia Laboral
+                    </h1>
+                </div>
+                <div class="col-lg-1 edit-action">
+                    <a href="#" class="btn btn-success">
+                        <i class="fa fa-plus"></i>
+                        Añadir
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
+
+                <div class="container col-lg-12 card-body">
+                    {% if laboral|length > 0 %}
+                        {% for item in laboral %}
+                            <div class="col-lg-4 card-item">
+                                <span>
+                                    Empresa: {{ item.empresa }}
+                                </span>
+                            </div>
+                            <div class="col-lg-4 card-item">
+                                <span>
+                                    Puesto: {{ item.puesto }}
+                                </span>
+                            </div>
+                            <div class="col-lg-4 card-item">
+                                <span class="text-right">
+                                    Fecha: {{ item.fechaInicio|date('d/m/Y') }} - {{ item.fechaFin|date('d/m/Y') }}
+                                </span>
+                            </div>
+                            <div class="col-lg-4 card-item">
+                                <span>
+                                    Actividad: {{ item.actividad }}
+                                </span>
+                            </div>
+
+                            <div class="col-lg-5 card-item">
+                                <span>
+                                    Tareas desempeñadas: {{ item.tareas }}
+                                </span>
+                            </div>
+                            <div class="col-lg-12">
+                                <span>
+                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                </span>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-lg-12 card-item">
+                            <h4 class="text-center">Aún no has añadido experiencia laboral</h4>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="container col-lg-5 card-principal">
+                <div class="col-lg-9">
+                    <h1 class="card-header">
+                        Informática
+                    </h1>
+                </div>
+                <div class="col-lg-3 edit-action">
+                    <a href="#" class="btn btn-success">
+                        <i class="fa fa-plus"></i>
+                        Añadir
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
+                <div class="container col-lg-12 card-body">
+                    {% if complementaria|length > 0 %}
+                        {% for item in complementaria %}
+                            <div class="col-lg-12 card-item">
+                                <span>
+                                    Titulado en {{ item.titulacion }} en el centro {{ item.nombreCentro }} - {{ item.horas }} horas
+                                </span>
+                                <span>
+                                    Obtenido en {{ item.anio }}
+                                </span>
+                                <span>
+                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                </span>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-lg-12 card-item">
+                            <h4 class="text-center">Aún no as añadido formación complementaria</h4>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="container col-lg-6 card-principal">
+                <div class="col-lg-9">
+                    <h1 class="card-header">
+                        Idiomas
+                    </h1>
+                </div>
+                <div class="col-lg-3 edit-action">
+                    <a href="#" class="btn btn-success">
+                        <i class="fa fa-plus"></i>
+                        Añadir
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
+                <div class="container col-lg-12 card-body">
+                    {% if idiomas|length > 0 %}
+                        {% for item in idiomas %}
+                            <div class="col-lg-12 card-item">
+                                <span>
+                                    <h4>{{ item.idioma }}</h4>
+                                </span>
+                                <span>
+                                    Traducción {{ item.traduce }} - Nivel oral {{ item.habla }} - Nivel escrito {{ item.escribe }}
+                                </span>
+
+                                <span>
+                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                </span>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-lg-12 card-item">
+                            <h4 class="text-center">Aún no as añadido formación complementaria</h4>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
+
+
 
     </div>
 
