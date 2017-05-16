@@ -16,7 +16,11 @@
         <form method="post" action="{{ path('comprobar') }}">
             <label for="username">IDENTIFICACIÓN: </label><input id="username" type="text" name="_username" class="form-control" required="required" placeholder="Introduzca su número de identificación" value="{{ ultimo_usuario }}" {% if not ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
             <label for="password">CONTRASEÑA: </label><input id="password" type="password" name="_password" class="form-control" required="required" placeholder="Introduzca su contraseña" {% if ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
-            <a href="#">¿Ha olvidado su contraseña?</a><button type="submit" class="btn btn-success pull-right"><i class="fa fa-sign-in"></i> Entrar</button>
+            <a href="#">¿Ha olvidado su contraseña?</a>
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-sign-in"></i>
+                Entrar
+            </button>
             <input type="hidden" name="_target_path" value="/perfil" />
         </form>
         <label class="label label-info"

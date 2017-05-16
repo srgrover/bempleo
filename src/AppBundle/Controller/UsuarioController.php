@@ -5,15 +5,18 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Fcomplementaria;
 use AppBundle\Entity\Formacion;
 use AppBundle\Entity\Idioma;
+use AppBundle\Entity\Informatica;
 use AppBundle\Entity\Laboral;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\FcomplementariaType;
 use AppBundle\Form\Type\FormacionType;
 use AppBundle\Form\Type\IdiomaType;
+use AppBundle\Form\Type\InformaticaType;
 use AppBundle\Form\Type\LaboralType;
 use AppBundle\Form\Type\RegisterType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,16 +50,9 @@ class UsuarioController extends Controller
     public function comprobarAction() {
     }
 
-    /**
-     * @Route("/registro", name="registro")
-     */
-    public function registroAction() {
-        return $this->redirectToRoute('registro_personal');
-    }
-
 
     /**
-     * @Route("/registro/datos-personales", name="registro_personal", methods={"GET", "POST"})
+     * @Route("/registro", name="registro_personal", methods={"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -76,9 +72,9 @@ class UsuarioController extends Controller
                 $usuario->setPassword($password);
 
                 $em->flush();
-                $this->addFlash('estado', 'Cambios guardados con éxito');
+                $this->addFlash('estado', 'Cambios guardados con éxito. Inicia sesión ahora mismo para añadir información a tu currículo');
 
-                return $this->redirectToRoute('registro_formacion', ['id' => $usuario->getId()]);
+                return $this->redirectToRoute('entrar');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
@@ -91,17 +87,30 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/registro/formacion/{id}", name="registro_formacion", methods={"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/editar/datos-personales", name="editar_personal", methods={"GET", "POST"})
      * @param Request $request
-     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroFormacionAction(Request $request, $id){
+    public function EditarPersonalAction(Request $request){
+
+    }
+
+    /**
+     * @Route("/editar/formacion/{id}", name="editar_formacion", methods={"GET", "POST"})
+     * @Route("/añadir/formacion", name="add_formacion", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Formacion|null $formacion
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function RegistroFormacionAction(Request $request, Formacion $formacion = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $formacion = new Formacion();
-        $formacion->setUsuario($id);
-        $em->persist($formacion);
+
+        if (null == $formacion) {
+            $formacion = new Formacion();
+            $em->persist($formacion);
+        }
 
         $form = $this->createForm(FormacionType::class, $formacion);
         $form->handleRequest($request);
@@ -110,13 +119,13 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_formacion_complementaria', ['id' => (int)$id]);
+                return $this->redirectToRoute('perfil');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render(':usuario:registro_formacion.html.twig', [
+        return $this->render(':usuario:formacion.html.twig', [
             'formacion' => $formacion,
             'formulario' => $form->createView(),
         ]);
@@ -125,16 +134,22 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/registro/formacion/complementaria/{id}", name="registro_formacion_complementaria", methods={"GET", "POST"})
+     * @Route("/añadir/formacion/complementaria/{id}", name="añadir_formacion_complementaria", methods={"GET", "POST"})
+     * @Route("/editar/formacion/complementaria/{id}", name="editar_complementaria", methods={"GET", "POST"})
      * @param Request $request
      * @param $id
+     * @param Fcomplementaria|null $fcomplementaria
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroComplementariaAction(Request $request, $id){
+    public function RegistroComplementariaAction(Request $request, $id, Fcomplementaria $fcomplementaria = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $fcomplementaria = new Fcomplementaria();
-        $fcomplementaria->setUsuario($id);
-        $em->persist($fcomplementaria);
+
+        if (null == $fcomplementaria) {
+            $fcomplementaria = new Fcomplementaria();
+            $fcomplementaria->setUsuario($id);
+            $em->persist($fcomplementaria);
+        }
 
         $form = $this->createForm(FcomplementariaType::class, $fcomplementaria);
         $form->handleRequest($request);
@@ -157,16 +172,22 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/registro/laboral/{id}", name="registro_laboral", methods={"GET", "POST"})
+     * @Route("/añadir/laboral/{id}", name="añadir_laboral", methods={"GET", "POST"})
+     * @Route("/editar/laboral/{id}", name="editar_laboral", methods={"GET", "POST"})
      * @param Request $request
      * @param $id
+     * @param Laboral|null $laboral
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroLaboralAction(Request $request, $id){
+    public function RegistroLaboralAction(Request $request, $id, Laboral $laboral = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $laboral = new Laboral();
-        $laboral->setUsuario($id);
-        $em->persist($laboral);
+
+        if (null == $laboral) {
+            $laboral = new Laboral();
+            $laboral->setUsuario($id);
+            $em->persist($laboral);
+        }
 
         $form = $this->createForm(LaboralType::class, $laboral);
         $form->handleRequest($request);
@@ -188,17 +209,21 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/registro/idiomas/{id}", name="registro_idiomas", methods={"GET", "POST"})
+     * @Route("/añadir/idiomas/{id}", name="registro_idiomas", methods={"GET", "POST"})
+     * @Route("/editar/idiomas/{id}", name="editar_idiomas", methods={"GET", "POST"})
      * @param Request $request
      * @param $id
+     * @param Idioma|null $idioma
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroIdiomasAction(Request $request, $id){
+    public function RegistroIdiomasAction(Request $request, $id, Idioma $idioma = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $idioma = new Idioma();
-        $idioma->setUsuario($id);
-        $em->persist($idioma);
+        if (null == $idioma) {
+            $idioma = new Idioma();
+            $idioma->setUsuario($id);
+            $em->persist($idioma);
+        }
 
         $form = $this->createForm(IdiomaType::class, $idioma);
         $form->handleRequest($request);
@@ -220,19 +245,23 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/registro/informatica/{id}", name="registro_informatica", methods={"GET", "POST"})
+     * @Route("/añadir/informatica/{id}", name="registro_informatica", methods={"GET", "POST"})
+     * @Route("/editar/informatica/{id}", name="editar_informatica", methods={"GET", "POST"})
      * @param Request $request
      * @param $id
+     * @param Informatica|null $informatica
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroInformaticaAction(Request $request, $id){
+    public function RegistroInformaticaAction(Request $request, $id, Informatica $informatica = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $informatica = new Fcomplementaria();
-        $informatica->setUsuario($id);
-        $em->persist($informatica);
+        if (null == $informatica) {
+            $informatica = new Fcomplementaria();
+            $informatica->setUsuario($id);
+            $em->persist($informatica);
+        }
 
-        $form = $this->createForm(FcomplementariaType::class, $informatica);
+        $form = $this->createForm(InformaticaType::class, $informatica);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -253,6 +282,7 @@ class UsuarioController extends Controller
 
 
     /**
+     * @Security("is_granted('ROLE_USER')")
      * @Route("/perfil", name="perfil")
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
@@ -298,6 +328,14 @@ class UsuarioController extends Controller
             ->getQuery()
             ->getResult();
 
+        $informatica_usuario = $em->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Informatica', 'i')
+            ->where('i.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
 //        $form = $this->createForm(RegisterType::class, $usuario, [
 //            'admin' => $this->isGranted('ROLE_ADMIN')
 //        ]);
@@ -319,25 +357,8 @@ class UsuarioController extends Controller
             'complementaria' => $complementaria_usuario,
             'laboral' => $laboral_usuario,
             'idiomas' => $idiomas_usuario,
+            'informatica' => $informatica_usuario
 //            'form' => $form->createView()
         ]);
     }
-
-    //Asignar nombre a formulario
-//    public function acmeAction(){
-//        $acme = new Acme();
-//        $form = $this->get('form.factory')
-//            ->createNamedBuilder(new AcmeType(), 'acme_form', $acme)
-//            ->getForm();
-//        $request = $this->getRequest();
-//
-//        if ($request->getMethod() == 'POST' && $request->request->has('acme_form')) {
-//            $form->bindRequest($request);
-//            if($form->isValid())
-//            {
-//                //do something
-//            }
-//        }
-//        //return something
-//    }
 }

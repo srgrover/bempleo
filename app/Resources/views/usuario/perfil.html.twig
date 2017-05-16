@@ -192,7 +192,7 @@
                     </h1>
                 </div>
                 <div class="col-lg-2 edit-action">
-                    <a href="#" class="btn btn-success">
+                    <a href="{{ path('add_formacion') }}" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                         Añadir
                     </a>
@@ -209,11 +209,12 @@
                                     Titulado en {{ item.titulacion }} en la especialidad de {{ item.especialidad }} en el centro {{ item.nombreCentro }}
                                 </span>
                                 <span>
-                                    Obtenido el {{ item.obtencion|date('d/m/Y') }}
+                                    Obtenido el {{ item.obtencion|date('m/Y') }}
                                 </span>
                                 <span>
-                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                    <a href="{{ path('editar_formacion', {'id': item.id}) }}" class="btn btn-info pull-right">Editar</a>
                                 </span>
+                                <div class="clearfix"></div>
                             </div>
 
                             <div class="clearfix"></div>
@@ -256,6 +257,7 @@
                                 <span>
                                     <a href="#" class="btn btn-info pull-right">Editar</a>
                                 </span>
+                                <div class="clearfix"></div>
                             </div>
 
                             <div class="clearfix"></div>
@@ -317,6 +319,7 @@
                                 <span>
                                     <a href="#" class="btn btn-info pull-right">Editar</a>
                                 </span>
+                                <div class="clearfix"></div>
                             </div>
 
                             <div class="clearfix"></div>
@@ -346,18 +349,19 @@
                 <div class="clearfix"></div>
                 <hr>
                 <div class="container col-lg-12 card-body">
-                    {% if complementaria|length > 0 %}
-                        {% for item in complementaria %}
+                    {% if informatica|length > 0 %}
+                        {% for item in informatica %}
                             <div class="col-lg-12 card-item">
                                 <span>
-                                    Titulado en {{ item.titulacion }} en el centro {{ item.nombreCentro }} - {{ item.horas }} horas
+                                    {{ item.campo }} - Nivel {{ item.nivel }}
                                 </span>
                                 <span>
-                                    Obtenido en {{ item.anio }}
+                                    Manejo: {{ item.programasManeja }}
                                 </span>
                                 <span>
                                     <a href="#" class="btn btn-info pull-right">Editar</a>
                                 </span>
+                                <div class="clearfix"></div>
                             </div>
 
                             <div class="clearfix"></div>
@@ -365,7 +369,7 @@
                         {% endfor %}
                     {% else %}
                         <div class="col-lg-12 card-item">
-                            <h4 class="text-center">Aún no as añadido formación complementaria</h4>
+                            <h4 class="text-center">Aún no as añadido información informática</h4>
                         </div>
                     {% endif %}
                 </div>
@@ -390,9 +394,10 @@
                     {% if idiomas|length > 0 %}
                         {% for item in idiomas %}
                             <div class="col-lg-12 card-item">
-                                <span>
-                                    <h4>{{ item.idioma }}</h4>
-                                </span>
+                                <h4 style="border-bottom: 1px solid #337ab7;padding-bottom: 3px;margin-bottom: 0;">
+                                    {{ item.idioma }}
+                                </h4>
+
                                 <span>
                                     Traducción {{ item.traduce }} - Nivel oral {{ item.habla }} - Nivel escrito {{ item.escribe }}
                                 </span>
@@ -400,6 +405,7 @@
                                 <span>
                                     <a href="#" class="btn btn-info pull-right">Editar</a>
                                 </span>
+                                <div class="clearfix"></div>
                             </div>
 
                             <div class="clearfix"></div>
@@ -407,7 +413,7 @@
                         {% endfor %}
                     {% else %}
                         <div class="col-lg-12 card-item">
-                            <h4 class="text-center">Aún no as añadido formación complementaria</h4>
+                            <h4 class="text-center">Aún no as añadido un idioma</h4>
                         </div>
                     {% endif %}
                 </div>

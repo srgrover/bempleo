@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {% set ruta = app.request.get('_route') %}
+    <div class="container ">
+        <div class="card-registro col-lg-7">
+            <h1>
+            {% if formacion.id %}
+                Modificar Formación académica
+            {% else %}
+                Añadir Formación académica
+            {% endif %}
+            </h1>
+
+            <div class="box-registro">
+                {{ form_start(formulario) }}
+                {{ form_widget(formulario) }}
+                <div class="form-group">
+                    <div class="col-sm-5">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a href="{{ path('perfil') }}" class="btn btn-warning">
+                                <i class="fa fa-arrow-left"></i>
+                                Volver
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-right">
+                        <button type="submit" name="enviar" class="btn btn-success">
+                            <i class="fa fa-save"></i>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(formulario) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
