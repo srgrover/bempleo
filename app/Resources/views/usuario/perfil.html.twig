@@ -2,7 +2,10 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('assets/js/main.js') }}"></script>
     <script type="text/javascript">
+        var URL = "{{ app.request.getSchemeAndHttpHost() }}";
+
         $(document).ready(function () {
             $('.avatar').mouseenter(function () {
                 $('.avatar a').css("display","initial");
@@ -86,7 +89,7 @@
                     {% set diferencia = usuario.fechaNac.diff(date('now')) %}
                     {% set edad = (diferencia.days/365)|number_format(0, '.', ',') %}
                     <span>
-                        {{ usuario.fechaNac | date('d/M/Y') }} - {{ edad }} años
+                        {{ usuario.fechaNac | date('d/m/Y', "Europe/Madrid") }} - {{ edad }} años
                     </span>
                     {% if usuario.email != null %}
                         <span>
@@ -204,6 +207,7 @@
                 <div class="container col-lg-12 card-body">
                     {% if formacion|length > 0 %}
                         {% for item in formacion %}
+                            {% set id = item.id %}
                             <div class="col-lg-12 card-item">
                                 <span>
                                     Titulado en {{ item.titulacion }} en la especialidad de {{ item.especialidad }} en el centro {{ item.nombreCentro }}
@@ -212,7 +216,52 @@
                                     Obtenido el {{ item.obtencion|date('m/Y') }}
                                 </span>
                                 <span>
-                                    <a href="{{ path('editar_formacion', {'id': item.id}) }}" class="btn btn-info pull-right">Editar</a>
+                                    <a href="{{ path('editar_formacion', {'id': item.id}) }}" class="btn btn-info pull-right">
+                                        <i class="fa fa-pencil"></i>
+                                        Editar
+                                    </a>
+                                    <!-- Modal Borrar Formación-->
+                                    <div class="modal fade" id="eliminaFormacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h3 class="modal-title" id="myModalLabel">
+                                                        Está a punto de eliminar este elemento
+                                                    </h3>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4>
+                                                        ¿Estás seguro de querer eliminar esta información?
+                                                    </h4>
+                                                    <span>
+                                                        <label class="label label-warning">
+                                                            <i class="fa fa-warning"></i>
+                                                            ADVERTENCIA:
+                                                        </label>
+                                                        &nbsp;Esta acción no se podrá deshacer en el futuro.
+                                                    </span>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        Cancelar
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-eliminar" data-id="{{ item.id }}">
+                                                        <i class="fa fa-trash"></i>
+                                                        Eliminar {{ item.id }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    <a href="#" class="pull-right link-eliminar" data-toggle="modal" data-target="#eliminaFormacion">
+                                        <i class="fa fa-trash"></i>
+                                        Eliminar {{ item.id }}
+                                    </a>
+
                                 </span>
                                 <div class="clearfix"></div>
                             </div>
@@ -226,8 +275,8 @@
                         </div>
                     {% endif %}
                 </div>
-
             </div>
+
             <div class="col-lg-1"></div>
             <div class="container col-lg-5 card-principal">
                 <div class="col-lg-9">

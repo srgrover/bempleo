@@ -27,6 +27,12 @@ hr {
 
 }
 
+.link-eliminar{
+    margin-right: 10px;
+    margin-top: 5px;
+    color: red;
+}
+
 /* NAV */
 .navbar-brand{
     padding-top: 0;

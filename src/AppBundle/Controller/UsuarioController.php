@@ -14,6 +14,7 @@ use AppBundle\Form\Type\IdiomaType;
 use AppBundle\Form\Type\InformaticaType;
 use AppBundle\Form\Type\LaboralType;
 use AppBundle\Form\Type\RegisterType;
+use Doctrine\Bundle\DoctrineCacheBundle\Command\FlushCommand;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -107,8 +108,11 @@ class UsuarioController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+
         if (null == $formacion) {
             $formacion = new Formacion();
+            $usuario = $this->getUser();
+            $formacion->setUsuario($usuario);
             $em->persist($formacion);
         }
 
@@ -287,7 +291,7 @@ class UsuarioController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function cambiarPerfilAction() {
+    public function PerfilAction() {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = $this->getUser();
@@ -360,5 +364,30 @@ class UsuarioController extends Controller
             'informatica' => $informatica_usuario
 //            'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     * @Route("/formacion/eliminar/{id}", name="eliminar_formacion")
+     * @param null $id
+     */
+    public function eliminarFormacionAction($id = null){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $formacion_repo = $em->getRepository('AppBundle:Formacion');
+        $formacion = $formacion_repo->find($id);
+        $usuario = $this->getUser();
+
+        if($usuario->getId() == $formacion->getUsuario()->getId()){
+            $em->remove($formacion);
+            $flush = $em->flush();
+            if($flush == null){
+                $this->addFlash('estado', 'Elemento borrado correctamente');
+            }else{
+                $this->addFlash('error', 'Hubo algún problema al borrar el elemento');
+            }
+        }else{
+            $this->addFlash('error', 'Hubo algún problema al borrar el elemento');
+        }
     }
 }
