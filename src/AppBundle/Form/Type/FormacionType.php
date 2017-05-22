@@ -20,28 +20,34 @@ class FormacionType extends AbstractType
         $builder
             ->add('nombreCentro', TextType::class, [
                 'label' => 'Nombre del centro',
-                'required' => false,
+                'required' => true,
                 'attr' => [
-                    'class' => 'form-centro'
+                    'class' => 'form-centro',
+                    'placeholder' => 'ej. Universidad de xxxx'
                 ]
             ])
             ->add('titulacion', TextType::class, [
                 'label' => 'Titulación',
-                'required' => false,
+                'required' => true,
                 'attr' => [
-                    'class' => 'form-titulacion'
+                    'class' => 'form-titulacion',
+                    'placeholder' => 'ej. Profesor de educación general'
                 ]
             ])
             ->add('especialidad', TextType::class, [
                 'label' => 'Especialidad',
-                'required' => false,
+                'required' => true,
                 'attr' => [
-                    'class' => 'form-especialidad'
+                    'class' => 'form-especialidad',
+                    'placeholder' => 'ej. Educación infantil'
                 ]
             ])
             ->add('obtencion', BirthdayType::class, [
                 'label' => 'Fecha de obtención (mm-aaaa)',
-                'required' => false,
+                'required' => true,
+                'attr' =>[
+                    'placeholder' => 'ej. 03-2001'
+                ],
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'mm-yyyy',

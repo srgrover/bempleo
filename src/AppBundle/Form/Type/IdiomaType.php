@@ -20,7 +20,7 @@ class IdiomaType extends AbstractType
         $builder
             ->add('idioma', ChoiceType::class, [
                 'label' => 'Idioma',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Alemán' => 'Alemán',
                     'Árabe' => 'Árabe',
@@ -50,7 +50,7 @@ class IdiomaType extends AbstractType
             ])
             ->add('traduce', ChoiceType::class, [
                 'label' => 'Nivel de traducción',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Básico' => 'Básico',
                     'Intermedio' => 'Intermedio',
@@ -63,7 +63,7 @@ class IdiomaType extends AbstractType
             ])
             ->add('habla', ChoiceType::class, [
                 'label' => 'Nivel hablado',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Básico' => 'Básico',
                     'Intermedio' => 'Intermedio',
@@ -76,7 +76,7 @@ class IdiomaType extends AbstractType
             ])
             ->add('escribe', ChoiceType::class, [
                 'label' => 'Nivel escrito',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Básico' => 'Básico',
                     'Intermedio' => 'Intermedio',

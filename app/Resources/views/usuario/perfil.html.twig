@@ -4,15 +4,12 @@
     {{ parent() }}
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script type="text/javascript">
-        var URL = "{{ app.request.getSchemeAndHttpHost() }}";
-
         $(document).ready(function () {
             $('.avatar').mouseenter(function () {
                 $('.avatar a').css("display","initial");
             }).mouseleave(function () {
                 $('.avatar a').css("display","none");
             });
-
 
             $('.card-principal').unbind("mouseenter").mouseenter(function () {
                 $(this).find('.edit-action a').css("display","initial");
@@ -73,7 +70,7 @@
                 </h1>
             </div>
             <div class="col-lg-2 edit-action">
-                <a href="#" class="btn btn-info">
+                <a href="{{ path('editar_personal') }}" class="btn btn-info">
                     <i class="fa fa-edit"></i>
                     Editar
                 </a>
@@ -220,46 +217,9 @@
                                         <i class="fa fa-pencil"></i>
                                         Editar
                                     </a>
-                                    <!-- Modal Borrar Formación-->
-                                    <div class="modal fade" id="eliminaFormacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    <h3 class="modal-title" id="myModalLabel">
-                                                        Está a punto de eliminar este elemento
-                                                    </h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h4>
-                                                        ¿Estás seguro de querer eliminar esta información?
-                                                    </h4>
-                                                    <span>
-                                                        <label class="label label-warning">
-                                                            <i class="fa fa-warning"></i>
-                                                            ADVERTENCIA:
-                                                        </label>
-                                                        &nbsp;Esta acción no se podrá deshacer en el futuro.
-                                                    </span>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        Cancelar
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-eliminar" data-id="{{ item.id }}">
-                                                        <i class="fa fa-trash"></i>
-                                                        Eliminar {{ item.id }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Modal -->
-                                    <a href="#" class="pull-right link-eliminar" data-toggle="modal" data-target="#eliminaFormacion">
+                                    <a href="{{ path('eliminar_formacion', {'id': item.id}) }}" class="pull-right link-eliminar" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
                                         <i class="fa fa-trash"></i>
-                                        Eliminar {{ item.id }}
+                                        Eliminar
                                     </a>
 
                                 </span>
@@ -285,7 +245,7 @@
                     </h1>
                 </div>
                 <div class="col-lg-3 edit-action">
-                    <a href="#" class="btn btn-success">
+                    <a href="{{ path('add_complementaria') }}" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                         Añadir
                     </a>
@@ -304,7 +264,13 @@
                                     Obtenido en {{ item.anio }}
                                 </span>
                                 <span>
-                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                    <a href="{{ path('editar_complementaria', {'id': item.id}) }}" class="btn btn-info pull-right">
+                                        Editar
+                                    </a>
+                                    <a href="{{ path('eliminar_complementaria', {'id': item.id}) }}" class="pull-right link-eliminar" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                        <i class="fa fa-trash"></i>
+                                        Eliminar
+                                    </a>
                                 </span>
                                 <div class="clearfix"></div>
                             </div>
@@ -314,7 +280,7 @@
                         {% endfor %}
                     {% else %}
                         <div class="col-lg-12 card-item">
-                            <h4 class="text-center">Aún no as añadido formación complementaria</h4>
+                            <h4 class="text-center">Aún no has añadido formación complementaria</h4>
                         </div>
                     {% endif %}
                 </div>
@@ -326,7 +292,7 @@
                     </h1>
                 </div>
                 <div class="col-lg-1 edit-action">
-                    <a href="#" class="btn btn-success">
+                    <a href="{{ path('add_laboral') }}" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                         Añadir
                     </a>
@@ -366,7 +332,13 @@
                             </div>
                             <div class="col-lg-12">
                                 <span>
-                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                    <a href="{{ path('editar_laboral', {'id': item.id}) }}" class="btn btn-info pull-right">
+                                        Editar
+                                    </a>
+                                    <a href="{{ path('eliminar_laboral', {'id': item.id}) }}" class="pull-right link-eliminar" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                        <i class="fa fa-trash"></i>
+                                        Eliminar
+                                    </a>
                                 </span>
                                 <div class="clearfix"></div>
                             </div>
@@ -389,7 +361,7 @@
                     </h1>
                 </div>
                 <div class="col-lg-3 edit-action">
-                    <a href="#" class="btn btn-success">
+                    <a href="{{ path('add_informatica') }}" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                         Añadir
                     </a>
@@ -408,7 +380,13 @@
                                     Manejo: {{ item.programasManeja }}
                                 </span>
                                 <span>
-                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                    <a href="{{ path('editar_informatica', {'id': item.id}) }}" class="btn btn-info pull-right">
+                                        Editar
+                                    </a>
+                                    <a href="{{ path('eliminar_informatica', {'id': item.id}) }}" class="pull-right link-eliminar" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                        <i class="fa fa-trash"></i>
+                                        Eliminar
+                                    </a>
                                 </span>
                                 <div class="clearfix"></div>
                             </div>
@@ -418,7 +396,7 @@
                         {% endfor %}
                     {% else %}
                         <div class="col-lg-12 card-item">
-                            <h4 class="text-center">Aún no as añadido información informática</h4>
+                            <h4 class="text-center">Aún no has añadido información informática</h4>
                         </div>
                     {% endif %}
                 </div>
@@ -431,7 +409,7 @@
                     </h1>
                 </div>
                 <div class="col-lg-3 edit-action">
-                    <a href="#" class="btn btn-success">
+                    <a href="{{ path('add_idioma') }}" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                         Añadir
                     </a>
@@ -452,7 +430,13 @@
                                 </span>
 
                                 <span>
-                                    <a href="#" class="btn btn-info pull-right">Editar</a>
+                                    <a href="{{ path('editar_idioma', {'id': item.id}) }}" class="btn btn-info pull-right">
+                                        Editar
+                                    </a>
+                                    <a href="{{ path('eliminar_idioma', {'id': item.id}) }}" class="pull-right link-eliminar" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                        <i class="fa fa-trash"></i>
+                                        Eliminar
+                                    </a>
                                 </span>
                                 <div class="clearfix"></div>
                             </div>
@@ -462,15 +446,12 @@
                         {% endfor %}
                     {% else %}
                         <div class="col-lg-12 card-item">
-                            <h4 class="text-center">Aún no as añadido un idioma</h4>
+                            <h4 class="text-center">Aún no has añadido un idioma</h4>
                         </div>
                     {% endif %}
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
 {% endblock %}

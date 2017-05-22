@@ -21,14 +21,14 @@ class LaboralType extends AbstractType
         $builder
             ->add('empresa', TextType::class, [
                 'label' => 'Nombre de la empresa',
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'form-empresa'
                 ]
             ])
             ->add('actividad', ChoiceType::class, [
                 'label' => 'Actividad de la empresa',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Ganadería y pesca' => 'Ganadería y pesca',
                     'Energía y agua' => 'Energía y agua',
@@ -54,21 +54,21 @@ class LaboralType extends AbstractType
             ])
             ->add('puesto', TextType::class, [
                 'label' => 'Puesto de trabajo',
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'form-puesto'
                 ]
             ])
             ->add('tareas', TextType::class, [
                 'label' => 'Tareas desempeñadas',
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'form-tareas'
                 ]
             ])
             ->add('fechaInicio', BirthdayType::class, [
                 'label' => 'Fecha de inicio (mm-aaaa)',
-                'required' => false,
+                'required' => true,
                 'widget' => 'single_text',
                 'format' => 'mm-yyyy',
                 'placeholder' => [
@@ -77,7 +77,7 @@ class LaboralType extends AbstractType
             ])
             ->add('fechaFin', BirthdayType::class, [
                 'label' => 'Fecha de finalización (mm-aaaa)',
-                'required' => false,
+                'required' => true,
                 'widget' => 'single_text',
                 'format' => 'mm-yyyy',
                 'placeholder' => [

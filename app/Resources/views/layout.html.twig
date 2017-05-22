@@ -19,11 +19,29 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}
-                            <li><a href="{{ path('perfil') }}"><i class="fa fa-user"></i> Mi perfil</a></li>
-                            <li><a href="{{ path('salir') }}">{{ app.user.numIdenti }} - Salir</a></li>
+                            <li>
+                                <a href="{{ path('perfil') }}">
+                                    <i class="fa fa-user"></i>
+                                    {{ app.user.numIdenti }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('salir') }}">
+                                    <i class="fa fa-sign-out"></i>
+                                    Salir
+                                </a>
+                            </li>
                         {% else %}
-                            <li{% if ruta == 'entrar' %} class="active"{% endif %}><a href="{{ path('entrar') }}">Acceder</a></li>
-                            <li{% if ruta == 'registro_personal' %} class="active"{% endif %}><a href="{{ path('registro_personal') }}">Registrarse</a></li>
+                            <li{% if ruta == 'entrar' %} class="active"{% endif %}>
+                                <a href="{{ path('entrar') }}">
+                                    Acceder
+                                </a>
+                            </li>
+                            <li{% if ruta == 'registro_personal' %} class="active"{% endif %}>
+                                <a href="{{ path('registro_personal') }}">
+                                    Registrarse
+                                </a>
+                            </li>
                         {% endif %}
                     </ul>
                 </div><!--/.nav-collapse -->

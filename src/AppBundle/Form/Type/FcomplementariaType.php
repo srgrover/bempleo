@@ -8,7 +8,7 @@
  */
 namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,32 +20,33 @@ class FcomplementariaType extends AbstractType
         $builder
             ->add('nombreCentro', TextType::class, [
                 'label' => 'Nombre del centro',
-                'required' => false,
+                'required' => true,
                 'attr' => [
+                    'placeholder' => 'ej. Academia Infotel',
                     'class' => 'form-centro'
                 ]
             ])
             ->add('titulacion', TextType::class, [
                 'label' => 'Titulación',
-                'required' => false,
+                'required' => true,
                 'attr' => [
+                    'placeholder' => 'ej. Curso de contabilidad informatizada',
                     'class' => 'form-titulacion'
                 ]
             ])
-            ->add('horas', TextType::class, [
+            ->add('horas', NumberType::class, [
                 'label' => 'Horas',
-                'required' => false,
+                'required' => true,
                 'attr' => [
+                    'placeholder' => 'ej. 60',
                     'class' => 'form-especialidad'
                 ]
             ])
-            ->add('anio', BirthdayType::class, [
+            ->add('anio', NumberType::class, [
                 'label' => 'Año de obtención (aaaa)',
-                'required' => false,
-                'widget' => 'single_text',
-                'format' => 'yyyy',
-                'placeholder' => [
-                    'year' => 'ej. 2010',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'ej. 2006',
                 ]
             ]);
     }

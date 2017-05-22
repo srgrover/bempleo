@@ -21,7 +21,7 @@ class InformaticaType extends AbstractType
         $builder
             ->add('campo', ChoiceType::class, [
                 'label' => 'Campo de la informática',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Ofimática' => 'Ofimática',
                     'Programación' => 'Programación',
@@ -35,7 +35,7 @@ class InformaticaType extends AbstractType
             ])
             ->add('nivel', ChoiceType::class, [
                 'label' => 'Indicar nivel',
-                'required' => false,
+                'required' => true,
                 'choices'  => [
                     'Usuario' => 'Usuario',
                     'Avanzado' => 'Avanzado',
@@ -48,10 +48,10 @@ class InformaticaType extends AbstractType
             ])
             ->add('programasManeja', TextareaType::class, [
                 'label' => 'Escriba una lista de programas que domina',
-                'required' => false,
-                'placeholder' => 'Microsoft Word, Adobe Photoshop, etc...',
+                'required' => true,
                 'attr' => [
-                    'class' => 'form-programas-maneja'
+                    'class' => 'form-programas-maneja',
+                    'placeholder' => 'Microsoft Word, Google calc, etc...'
                 ]
             ]);
     }

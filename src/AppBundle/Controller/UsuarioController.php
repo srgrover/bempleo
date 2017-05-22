@@ -14,16 +14,12 @@ use AppBundle\Form\Type\IdiomaType;
 use AppBundle\Form\Type\InformaticaType;
 use AppBundle\Form\Type\LaboralType;
 use AppBundle\Form\Type\RegisterType;
-use Doctrine\Bundle\DoctrineCacheBundle\Command\FlushCommand;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\Validator\Constraints\DateTime;
-//use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UsuarioController extends Controller
 {
@@ -94,7 +90,45 @@ class UsuarioController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function EditarPersonalAction(Request $request){
+        $usuario = $this->getUser();   //getUser() para recoger los datos de un usuario que ya esta logueado
+        $usuario_image = $usuario->getFoto();
+        $form = $this->createForm(RegisterType::class, $usuario);  //Crea el formulario
 
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
+            $user_isset = $em->createQueryBuilder()
+                ->select('u')
+                ->from('AppBundle:Usuario', 'u')
+                ->where('u.numIdenti = :identi')
+                ->setParameter('identi', $form->get("numIdenti")->getData())
+                ->getQuery()
+                ->getResult();
+            if(count($user_isset) == 0 || ($usuario->getNumIdenti() == $user_isset[0]->getNumIdenti())){
+                //Fichero subido
+                $imagenPerfil = $form["foto"]->getData();
+                if(!empty($imagenPerfil) && $imagenPerfil != null){
+                    $ext = $imagenPerfil->guessExtension();
+                    if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
+                        $nombre_imagen = $usuario->getId().time().'.'.$ext;
+                        $imagenPerfil->move("uploads/users", $nombre_imagen);
+                        $usuario->setImagenPerfil($nombre_imagen);
+                    }
+                }else{
+                    $usuario->setImagenPerfil($usuario_image);
+                }
+                $em->persist($usuario);
+
+                $flush = $em->flush();
+                if($flush == null){ //No devuelve ningun error
+                    $status = "Datos modificados correctamente";
+                }else{
+                    $status = "Los datos no se han modificado correctamente";
+                }
+            }else{
+                $status = "El usuario ya existe !!";
+            }
+        }
     }
 
     /**
@@ -137,21 +171,20 @@ class UsuarioController extends Controller
 
 
     /**
-     * @Route("/registro/formacion/complementaria/{id}", name="registro_formacion_complementaria", methods={"GET", "POST"})
-     * @Route("/añadir/formacion/complementaria/{id}", name="añadir_formacion_complementaria", methods={"GET", "POST"})
+     * @Route("/añadir/formacion/complementaria", name="add_complementaria", methods={"GET", "POST"})
      * @Route("/editar/formacion/complementaria/{id}", name="editar_complementaria", methods={"GET", "POST"})
      * @param Request $request
-     * @param $id
      * @param Fcomplementaria|null $fcomplementaria
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroComplementariaAction(Request $request, $id, Fcomplementaria $fcomplementaria = null){
+    public function RegistroComplementariaAction(Request $request, Fcomplementaria $fcomplementaria = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $fcomplementaria) {
             $fcomplementaria = new Fcomplementaria();
-            $fcomplementaria->setUsuario($id);
+            $usuario = $this->getUser();
+            $fcomplementaria->setUsuario($usuario);
             $em->persist($fcomplementaria);
         }
 
@@ -162,34 +195,33 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_laboral', ['id' => $id]);
+                return $this->redirectToRoute('perfil');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render(':usuario:registro_formacion_complementaria.html.twig', [
+        return $this->render(':usuario:formacion_complementaria.html.twig', [
             'fcomplementaria' => $fcomplementaria,
             'formulario' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/registro/laboral/{id}", name="registro_laboral", methods={"GET", "POST"})
-     * @Route("/añadir/laboral/{id}", name="añadir_laboral", methods={"GET", "POST"})
+     * @Route("/añadir/laboral", name="add_laboral", methods={"GET", "POST"})
      * @Route("/editar/laboral/{id}", name="editar_laboral", methods={"GET", "POST"})
      * @param Request $request
-     * @param $id
      * @param Laboral|null $laboral
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroLaboralAction(Request $request, $id, Laboral $laboral = null){
+    public function RegistroLaboralAction(Request $request, Laboral $laboral = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $laboral) {
             $laboral = new Laboral();
-            $laboral->setUsuario($id);
+            $usuario = $this->getUser();
+            $laboral->setUsuario($usuario);
             $em->persist($laboral);
         }
 
@@ -200,32 +232,33 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_idiomas', ['id' => $id]);
+                return $this->redirectToRoute('perfil');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render(':usuario:registro_laboral.html.twig', [
+        return $this->render(':usuario:laboral.html.twig', [
             'laboral' => $laboral,
             'formulario' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/añadir/idiomas/{id}", name="registro_idiomas", methods={"GET", "POST"})
-     * @Route("/editar/idiomas/{id}", name="editar_idiomas", methods={"GET", "POST"})
+     * @Route("/añadir/idioma", name="add_idioma", methods={"GET", "POST"})
+     * @Route("/editar/idioma/{id}", name="editar_idioma", methods={"GET", "POST"})
      * @param Request $request
-     * @param $id
      * @param Idioma|null $idioma
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroIdiomasAction(Request $request, $id, Idioma $idioma = null){
+    public function RegistroIdiomasAction(Request $request, Idioma $idioma = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         if (null == $idioma) {
             $idioma = new Idioma();
-            $idioma->setUsuario($id);
+            $usuario = $this->getUser();
+            $idioma->setUsuario($usuario);
             $em->persist($idioma);
         }
 
@@ -236,32 +269,33 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('registro_informatica', ['id' => $id]);
+                return $this->redirectToRoute('perfil');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render(':usuario:registro_idiomas.html.twig', [
+        return $this->render(':usuario:idiomas.html.twig', [
             'idioma' => $idioma,
             'formulario' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/añadir/informatica/{id}", name="registro_informatica", methods={"GET", "POST"})
+     * @Route("/añadir/informatica", name="add_informatica", methods={"GET", "POST"})
      * @Route("/editar/informatica/{id}", name="editar_informatica", methods={"GET", "POST"})
      * @param Request $request
-     * @param $id
      * @param Informatica|null $informatica
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroInformaticaAction(Request $request, $id, Informatica $informatica = null){
+    public function RegistroInformaticaAction(Request $request, Informatica $informatica = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         if (null == $informatica) {
-            $informatica = new Fcomplementaria();
-            $informatica->setUsuario($id);
+            $informatica = new Informatica();
+            $usuario = $this->getUser();
+            $informatica->setUsuario($usuario);
             $em->persist($informatica);
         }
 
@@ -272,13 +306,13 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('entrar');
+                return $this->redirectToRoute('perfil');
             }
             catch(Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render(':usuario:registro_informatica.html.twig', [
+        return $this->render(':usuario:informatica.html.twig', [
             'informatica' => $informatica,
             'formulario' => $form->createView()
         ]);
@@ -305,6 +339,7 @@ class UsuarioController extends Controller
             ->from('AppBundle:Formacion', 'f')
             ->where('f.usuario = :id')
             ->setParameter('id', $usuario->getId())
+            ->orderBy('f.obtencion', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -313,6 +348,7 @@ class UsuarioController extends Controller
             ->from('AppBundle:Fcomplementaria', 'f')
             ->where('f.usuario = :id')
             ->setParameter('id', $usuario->getId())
+            ->orderBy('f.anio', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -364,30 +400,5 @@ class UsuarioController extends Controller
             'informatica' => $informatica_usuario
 //            'form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @Route("/formacion/eliminar/{id}", name="eliminar_formacion")
-     * @param null $id
-     */
-    public function eliminarFormacionAction($id = null){
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $formacion_repo = $em->getRepository('AppBundle:Formacion');
-        $formacion = $formacion_repo->find($id);
-        $usuario = $this->getUser();
-
-        if($usuario->getId() == $formacion->getUsuario()->getId()){
-            $em->remove($formacion);
-            $flush = $em->flush();
-            if($flush == null){
-                $this->addFlash('estado', 'Elemento borrado correctamente');
-            }else{
-                $this->addFlash('error', 'Hubo algún problema al borrar el elemento');
-            }
-        }else{
-            $this->addFlash('error', 'Hubo algún problema al borrar el elemento');
-        }
     }
 }
