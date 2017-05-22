@@ -10,10 +10,12 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegisterType extends AbstractType
@@ -270,6 +272,14 @@ class RegisterType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-pref-ocupacion'
+                ]
+            ])
+            ->add('foto', FileType::class, [
+                'label' => 'Foto de perfil',
+                'required' => false,
+                'data_class' => null,
+                'attr' => [
+                    'class' => 'form-foto form-control'
                 ]
             ]);
     }

@@ -96,11 +96,12 @@ class UsuarioController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid() && $form->isSubmitted()) {
+            /** @var EntityManager $em*/
             $em = $this->getDoctrine()->getManager();
             $user_isset = $em->createQueryBuilder()
                 ->select('u')
                 ->from('AppBundle:Usuario', 'u')
-                ->where('u.numIdenti = :identi')
+                ->where('u.num_identi = :identi')
                 ->setParameter('identi', $form->get("numIdenti")->getData())
                 ->getQuery()
                 ->getResult();
@@ -112,10 +113,10 @@ class UsuarioController extends Controller
                     if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
                         $nombre_imagen = $usuario->getId().time().'.'.$ext;
                         $imagenPerfil->move("uploads/users", $nombre_imagen);
-                        $usuario->setImagenPerfil($nombre_imagen);
+                        $usuario->setFoto($nombre_imagen);
                     }
                 }else{
-                    $usuario->setImagenPerfil($usuario_image);
+                    $usuario->setFoto($usuario_image);
                 }
                 $em->persist($usuario);
 
@@ -129,6 +130,10 @@ class UsuarioController extends Controller
                 $status = "El usuario ya existe !!";
             }
         }
+
+        return $this->render(':usuario:registro_personal.html.twig', array(
+            "formulario" => $form->createView()
+        ));
     }
 
     /**
