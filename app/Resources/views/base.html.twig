@@ -12,6 +12,14 @@
     {% block javascripts %}
         <script src="{{ asset('assets/jquery/jquery-3.2.1.min.js') }}"></script>
         <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.js-datepicker').datepicker({
+                    format: 'mm-yyyy'
+                });
+            });
+        </script>
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

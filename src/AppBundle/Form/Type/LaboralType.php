@@ -10,6 +10,7 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -46,6 +47,7 @@ class LaboralType extends AbstractType
                     'Serv. recreat. y culturales' => 'Serv. recreat. y culturales',
                     'Serv. soc. y a la comunidad' => 'Serv. soc. y a la comunidad',
                     'Turismo, transporte y comunicaciones' => 'Turismo, transporte y comunicaciones',
+                    'Otros' => 'Otros'
                 ],
                 'placeholder' => 'Selecciona una actividad',
                 'attr' => [
@@ -66,22 +68,24 @@ class LaboralType extends AbstractType
                     'class' => 'form-tareas'
                 ]
             ])
-            ->add('fechaInicio', BirthdayType::class, [
+            ->add('fechaInicio', DateType::class, [
                 'label' => 'Fecha de inicio (mm-aaaa)',
                 'required' => true,
-                'widget' => 'single_text',
                 'format' => 'mm-yyyy',
-                'placeholder' => [
-                    'month' => 'Mes', 'year' => 'Año',
+                'html5' => false,
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'js-datepicker'
                 ]
             ])
-            ->add('fechaFin', BirthdayType::class, [
+            ->add('fechaFin', DateType::class, [
                 'label' => 'Fecha de finalización (mm-aaaa)',
                 'required' => true,
-                'widget' => 'single_text',
                 'format' => 'mm-yyyy',
-                'placeholder' => [
-                    'month' => 'Mes', 'year' => 'Año',
+                'html5' => false,
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'js-datepicker'
                 ]
             ]);
     }

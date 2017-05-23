@@ -1,24 +1,16 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: jonathan
- * Date: 25/04/17
- * Time: 10:51
- */
 namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegisterType extends AbstractType
+class EditarUsuarioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -33,19 +25,15 @@ class RegisterType extends AbstractType
                     'NIE' => 'NIE'
                 ],
                 'attr' => [
-                    'class' => 'form-tipo-doc'
+                    'class' => 'form-tipo-doc disabled'
                 ]
             ])
             ->add('numIdenti', TextType::class, [
                 'label' => '* Número de identificación',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-num-identi'
+                    'class' => 'form-num-identi disabled'
                 ]
-            ])
-            ->add('password', PasswordType::class, [
-                'label' => '* Contraseña',
-                'required' => true
             ])
             ->add('nombre', TextType::class, [
                 'label' => '* Nombre',
@@ -75,11 +63,8 @@ class RegisterType extends AbstractType
             ->add('fechaNac', BirthdayType::class, [
                 'label' => '* Fecha nacimiento',
                 'required' => true,
-                'format' => 'm-yyyy',
-                'html5' => false,
-                'widget' => 'single_text',
                 'attr' => [
-                    'class' => 'js-datepicker'
+                    'class' => 'form-fechanac'
                 ]
             ])
             ->add('domicilio', TextType::class, [
@@ -286,6 +271,7 @@ class RegisterType extends AbstractType
                 ]
             ]);
     }
+
     /**
      * Returns the name of this type.
      *

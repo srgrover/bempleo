@@ -36,6 +36,8 @@ hr {
 /* NAV */
 .navbar-brand{
     padding-top: 0;
+    width: 180px;
+    overflow: hidden;
 }
 
 .navbar-brand img{
@@ -169,4 +171,58 @@ hr {
 
 .edit-action{
     margin-top: 10px;
+}
+
+/* DATEPICKER */
+
+span.month, span.year, span.century, span.decade {
+    padding: 5px;
+}
+
+th.next {
+    text-align: right;
+}
+
+td.active{
+    background-color: #4cae4c;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+th.datepicker-switch{
+    text-align: center;
+}
+
+.datepicker th, .datepicker td, td[colspan='7'] span{
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.datepicker th:hover, .datepicker td:hover, td[colspan='7'] span:hover{
+    background-color: #eb9316;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+td[colspan='7']:hover{
+    background-color: #FFF;
+    color: black;
+    font-weight: normal;
+}
+
+/* MENSAJES FLASH NUM IDENTI */
+
+.message-container{
+    float: left;
+    display: none;
+    width: 100%;
+    margin-top: 50px;
+    background-color: #dd4444;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.message-container p{
+    text-align: center;
+    color: #ffffff;
 }

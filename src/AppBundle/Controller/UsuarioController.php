@@ -8,6 +8,7 @@ use AppBundle\Entity\Idioma;
 use AppBundle\Entity\Informatica;
 use AppBundle\Entity\Laboral;
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\EditarUsuarioType;
 use AppBundle\Form\Type\FcomplementariaType;
 use AppBundle\Form\Type\FormacionType;
 use AppBundle\Form\Type\IdiomaType;
@@ -92,7 +93,7 @@ class UsuarioController extends Controller
     public function EditarPersonalAction(Request $request){
         $usuario = $this->getUser();   //getUser() para recoger los datos de un usuario que ya esta logueado
         $usuario_image = $usuario->getFoto();
-        $form = $this->createForm(RegisterType::class, $usuario);  //Crea el formulario
+        $form = $this->createForm(EditarUsuarioType::class, $usuario);  //Crea el formulario
 
         $form->handleRequest($request);
         if ($form->isValid() && $form->isSubmitted()) {
@@ -122,16 +123,17 @@ class UsuarioController extends Controller
 
                 $flush = $em->flush();
                 if($flush == null){ //No devuelve ningun error
-                    $status = "Datos modificados correctamente";
+                    $this->addFlash('estado', 'Los datos se han modificado correctamente');
+                    return $this->redirectToRoute('perfil');
                 }else{
-                    $status = "Los datos no se han modificado correctamente";
+                    $this->addFlash('error', 'Hubo algún problema al intentar modificar los datos');
                 }
             }else{
-                $status = "El usuario ya existe !!";
+                $this->addFlash('error', 'El número de identificación ya está siendo usado por otra persona');
             }
         }
 
-        return $this->render(':usuario:registro_personal.html.twig', array(
+        return $this->render(':usuario:editar_usuario.html.twig', array(
             "formulario" => $form->createView()
         ));
     }
