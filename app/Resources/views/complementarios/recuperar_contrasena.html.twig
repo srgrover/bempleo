@@ -13,13 +13,19 @@
     <div class="container box-login">
         <label class="label label-danger label-beta">BETA</label>
         <h1>BOLSA DE EMPLEO <small>V0.5</small></h1>
-        <form method="post" action="{{ path('comprobar') }}">
-            <label for="username">IDENTIFICACIÓN: </label><input id="username" type="text" name="_username" class="form-control" required="required" placeholder="Introduzca su número de identificación" value="{{ ultimo_usuario }}" {% if not ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
-            <label for="password">CONTRASEÑA: </label><input id="password" type="password" name="_password" class="form-control" required="required" placeholder="Introduzca su contraseña" {% if ultimo_usuario %}autofocus="autofocus"{% endif %}><br>
-            <a href="{{ path('buscar_usuario') }}">¿Ha olvidado su contraseña?</a>
+        <form method="post" action="{{ path('comprobar_usuario') }}">
+            <label class="label label-warning ">
+                Introduce tu número de identificación para buscar tu cuenta.
+            </label><br/><br/>
+            <label for="username">IDENTIFICACIÓN: </label>
+            <input id="username" type="text" name="identif" class="form-control" required="required" placeholder="Introduzca su número de identificación" value="{{ ultimo_usuario }}" {% if not ultimo_usuario %}autofocus="autofocus"{% endif %} /><br>
+            <a href="{{ path('entrar') }}">
+                <i class="fa fa-angle-left"></i>
+                volver
+            </a>
             <button type="submit" class="btn btn-success pull-right">
-                <i class="fa fa-sign-in"></i>
-                Entrar
+                <i class="fa fa-search"></i>
+                Buscar
             </button>
             <input type="hidden" name="_target_path" value="/perfil" />
         </form>
@@ -27,7 +33,8 @@
                data-toggle="tooltip"
                data-placement="bottom"
                title="IDENTIFICACIÓN: Introduce tu número de identificación (NIF, NIE, PASAPORTE o TARJETA RESIDENCIA)">
-            <i class="fa fa-info-circle"></i> Ayuda
+            <i class="fa fa-info-circle"></i>
+            Ayuda
         </label>
     </div>
 
