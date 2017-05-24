@@ -48,7 +48,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('perfil');
         }
 
-        $search = trim($request->query->get("identif", null)); //Se recoge el valor de la variable search de la URL
+        $search = trim($request->request->get("identif", null)); //Se recoge el valor de la variable search de la URL
 
         if($search == null){    //Si la variable search del GET es nula, se redirige a la pagina home
             $this->addFlash('error', 'No puedes dejar el campo de identificación vacío');
@@ -74,7 +74,7 @@ class DefaultController extends Controller
         return $this->render('complementarios/comprobar_usuario.html.twig', [
             'ultimo_usuario' => $helper->getLastUsername(),
             'error' => $helper->getLastAuthenticationError(),
-            'usu' => $usuario
+            'usu' => $usuario,
         ]);
     }
 }

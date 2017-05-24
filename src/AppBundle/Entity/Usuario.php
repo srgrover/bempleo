@@ -7,6 +7,8 @@
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+// Acme/TaskBundle/Entity/Task.php
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,91 +24,178 @@ class Usuario implements UserInterface{
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     private $tipo_doc;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      * @var string
+     *
+     * @Assert\NotBlank()
      */
     private $num_identi;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="8",
+     *     minMessage="La contraseña debe tener al menos 8 carácteres"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,15}[^'\s]/",
+     *     match=false,
+     *     message="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, otra minúscula y un dígito."
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Un nombre no puede contener un dígito"
+     * )
      */
     private $nombre;
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Un apellido no puede contener un dígito"
+     * )
      */
     private $apellidos;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
      */
     private $domicilio;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="La población no puede contener un dígito"
+     * )
      */
     private $poblacion;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="La provincia no puede contener un dígito"
+     * )
      */
     private $provincia;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/(0[1-9]|5[0-2]|[0-4][0-9])[0-9]{3}/g",
+     *     match=false,
+     * )
+     * @Assert\Length(
+     *     min="5",
+     *     max="5",
+     *     exactMessage="El código postal debe tener 5 dígitos"
+     * )
      */
     private $cod_postal;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Your name cannot contain a number"
+     * )
      */
     private $pais;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/(\+34|0034|34)?[ -]*(9|6|7)[ -]*([0-9][ -]*){8}/g",
+     *     match=false,
+     *     message="El número de teléfono debe tener 9 dígitos y comenzar por 9, 6, o 7"
+     * )
      */
     private $movil;
 
     /**
      * @ORM\Column(type="string")
      * @var string
+     *
+     * @Assert\Regex(
+     *     pattern="/(\+34|0034|34)?[ -]*(9|6|7)[ -]*([0-9][ -]*){8}/g",
+     *     match=false,
+     *     message="El número de teléfono debe tener 9 dígitos y comenzar por 9, 6, o 7"
+     * )
      */
     private $telefono;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     *
+     * @Assert\Regex(
+     *     pattern="/[\+? *[1-9]+]?[0-9 ]/+",
+     *     match=false,
+     *     message="El número de fax no esta admitido"
+     * )
      */
     private $fax;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     *
+     * @Assert\Email(
+     *     message="El email '{{ value }} no es válido'",
+     *     checkMX=true
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="date")
      * @var \DateTime
+     *
+     * @Assert\Type("\DateTime")
      */
     private $fecha_nac;
 
