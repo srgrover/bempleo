@@ -1,8 +1,26 @@
 {% extends 'layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+{% endblock %}
+
 {% block content %}
+    <div class="message-container">
+        <p class="message">
+            El NIF es erroneo. El formato no es válido.
+        </p>
+    </div>
     {% set ruta = app.request.get('_route') %}
     <div class="container ">
+        {% if app.user and app.user.isAdmin %}
+            <h3>
+                <a href="{{ path('administracion') }}" class="pull-left" style="margin-top: 55px;">
+                    <i class="fa fa-angle-left" style="font-size: 30px"></i>
+                    Volver
+                </a>
+            </h3>
+        {% endif %}
         <div class="card-registro col-lg-7">
             <h1>
                 {% if ruta == 'editar_personal' %}
@@ -16,12 +34,20 @@
                 {{ form_widget(formulario) }}
                 <div class="form-group">
                     <div class="col-sm-2">
+                        {% if app.user and app.user.isAdmin %}
+                            <a href="{{ path('administracion') }}" class="btn btn-warning pull-left">
+                                <i class="fa fa-arrow-left"></i>
+                                Volver
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-7"></div>
+                    <div class="col-sm-3">
                         <button type="submit" name="enviar" class="btn btn-success">
                             <i class="fa fa-save"></i>
                             Guardar
                         </button>
                     </div>
-                    <div class="col-sm-10"></div>
                 </div>
                 {{ form_end(formulario) }}
             </div>

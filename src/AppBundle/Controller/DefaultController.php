@@ -66,9 +66,6 @@ class DefaultController extends Controller
 //            ->getQuery()
 //            ->getResult();
 
-
-
-
         $helper = $this->get('security.authentication_utils');
 
         return $this->render('complementarios/comprobar_usuario.html.twig', [

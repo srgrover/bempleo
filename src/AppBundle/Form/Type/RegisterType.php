@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegisterType extends AbstractType
@@ -75,12 +74,6 @@ class RegisterType extends AbstractType
             ->add('fechaNac', BirthdayType::class, [
                 'label' => '* Fecha nacimiento',
                 'required' => true,
-                'format' => 'm-yyyy',
-                'html5' => false,
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'js-datepicker'
-                ]
             ])
             ->add('domicilio', TextType::class, [
                 'label' => '* Domicilio',

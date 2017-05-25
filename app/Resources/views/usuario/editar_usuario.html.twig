@@ -13,7 +13,7 @@
     </div>
     <div class="container ">
         <h3>
-            <a href="{{ path('perfil') }}" class="pull-left" style="margin-top: 55px;">
+            <a href="{% if app.user.isAdmin %}{{ path('administracion') }}{% else %}{{ path('perfil') }}{% endif %}" class="pull-left" style="margin-top: 55px;">
                 <i class="fa fa-angle-left" style="font-size: 30px"></i>
                 Volver
             </a>
@@ -32,13 +32,18 @@
                 </button>
                 {{ form_widget(formulario) }}
                 <div class="form-group">
-                    <div class="col-sm-2">
-                        <a href="{{ path('perfil') }}" class="btn btn-warning pull-left">
+                    <div class="col-sm-4">
+                        <a href="{% if app.user.isAdmin %}{{ path('administracion') }}{% else %}{{ path('perfil') }}{% endif %}" class="btn btn-warning pull-left">
                             <i class="fa fa-arrow-left"></i>
                             Volver
                         </a>
                     </div>
-                    <div class="col-sm-7"></div>
+                    <div class="col-sm-5">
+                        <a href="{{ path('administracion') }}" class="btn btn-info pull-left">
+                            <i class="fa fa-retweet"></i>
+                            Modificar contraseña
+                        </a>
+                    </div>
                     <div class="col-sm-3">
                         <button type="submit" name="enviar" class="btn btn-success">
                             <i class="fa fa-save"></i>

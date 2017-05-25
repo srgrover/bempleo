@@ -118,10 +118,6 @@ class Usuario implements UserInterface{
      * @var string
      *
      * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="/(0[1-9]|5[0-2]|[0-4][0-9])[0-9]{3}/g",
-     *     match=false,
-     * )
      * @Assert\Length(
      *     min="5",
      *     max="5",
@@ -138,20 +134,20 @@ class Usuario implements UserInterface{
      * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
-     *     message="Your name cannot contain a number"
+     *     message="El país no puede contener números"
      * )
      */
     private $pais;
 
+    ///(\+34|0034|34)?[ -]*(9|6|7)[ -]*([0-9][ -]*){8}/
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      *
-     * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="/(\+34|0034|34)?[ -]*(9|6|7)[ -]*([0-9][ -]*){8}/g",
-     *     match=false,
-     *     message="El número de teléfono debe tener 9 dígitos y comenzar por 9, 6, o 7"
+     * @Assert\Length(
+     *     min="9",
+     *     max="9",
+     *     exactMessage="El número de teléfono debe tener 9 dígitos"
      * )
      */
     private $movil;
@@ -160,10 +156,11 @@ class Usuario implements UserInterface{
      * @ORM\Column(type="string")
      * @var string
      *
-     * @Assert\Regex(
-     *     pattern="/(\+34|0034|34)?[ -]*(9|6|7)[ -]*([0-9][ -]*){8}/g",
-     *     match=false,
-     *     message="El número de teléfono debe tener 9 dígitos y comenzar por 9, 6, o 7"
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="9",
+     *     max="9",
+     *     exactMessage="El número de teléfono debe tener 9 dígitos"
      * )
      */
     private $telefono;

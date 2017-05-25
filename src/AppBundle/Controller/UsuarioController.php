@@ -55,6 +55,10 @@ class UsuarioController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function RegistroPersonalAction(Request $request){
+        if(is_object($this->getUser()) && !$this->getUser()->isAdmin()){
+            return $this->redirect('perfil');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = new Usuario();
@@ -333,6 +337,10 @@ class UsuarioController extends Controller
      * @internal param Request $request
      */
     public function PerfilAction() {
+        if(is_object($this->getUser()) && $this->getUser()->isAdmin()){
+            return $this->redirect('administracion');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = $this->getUser();
