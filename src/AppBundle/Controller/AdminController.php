@@ -21,6 +21,10 @@ class AdminController extends Controller
      * @Route("/", name="administracion")
      */
     public function indexAction(){
+        if(!$this->getUser()->isAdmin()){
+            return $this->redirectToRoute('perfil');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->createQueryBuilder()

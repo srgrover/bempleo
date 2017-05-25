@@ -416,4 +416,29 @@ class UsuarioController extends Controller
 //            'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     * @Route("/usuario/cambiar-contraseña", name="cambiar_pass")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     */
+    public function cambiarPassAction(Usuario $usuario) {
+
+        return $this->render(':administracion:cambiar_contraseña.html.twig', [
+            'usuario' => $usuario
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     * @Route("/usuario/cambiar-contraseña", name="confirmar_pass")
+     * @param Usuario $usuario
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     */
+    public function confirmarPassAction(Usuario $usuario) {
+
+        return $this->redirectToRoute('administracion');
+    }
 }
