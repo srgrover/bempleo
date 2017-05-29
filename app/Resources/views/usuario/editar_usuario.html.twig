@@ -2,7 +2,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/validacion.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -39,7 +39,7 @@
                         </a>
                     </div>
                     <div class="col-sm-5">
-                        <a href="{{ path('cambiar_pass', {'id': usuario.id}) }}" class="btn btn-info pull-left">
+                        <a href="{% if app.user.isAdmin %}{{ path('cambiar_pass', {'id': usuario.id}) }}{% else %}{{ path('cambiar_pass', {'id': app.user.id}) }}{% endif %}" class="btn btn-info pull-left">
                             <i class="fa fa-retweet"></i>
                             Modificar contraseña
                         </a>

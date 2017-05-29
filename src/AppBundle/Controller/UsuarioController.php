@@ -337,6 +337,7 @@ class UsuarioController extends Controller
      * @internal param Request $request
      */
     public function PerfilAction() {
+
         if(is_object($this->getUser()) && $this->getUser()->isAdmin()){
             return $this->redirect('administracion');
         }
@@ -344,6 +345,7 @@ class UsuarioController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = $this->getUser();
+
 
         if(empty($usuario) || !is_object($usuario)){
             return $this->redirectToRoute('entrar');
@@ -419,26 +421,96 @@ class UsuarioController extends Controller
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @Route("/usuario/cambiar-contraseña", name="cambiar_pass")
+     * @Route("/usuario/cambiar-contraseña/{id}", name="cambiar_pass")
+     * @param Usuario $usuario
      * @return \Symfony\Component\HttpFoundation\Response
-     * @internal param Request $request
      */
     public function cambiarPassAction(Usuario $usuario) {
 
-        return $this->render(':administracion:cambiar_contraseña.html.twig', [
-            'usuario' => $usuario
-        ]);
+        if($this->getUser()->isAdmin() || (is_object($this->getUser()) && $this->getUser()->getId() == $usuario->getId())){
+            return $this->render(':administracion:cambiar_contraseña.html.twig', [
+                'usuario' => $usuario
+            ]);
+        }else{
+            return $this->redirectToRoute('perfil');
+        }
     }
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @Route("/usuario/cambiar-contraseña", name="confirmar_pass")
+     * @Route("/usuario/confirmar-contraseña/{id}", name="confirmar_pass")
+     * @param Request $request
      * @param Usuario $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function confirmarPassAction(Usuario $usuario) {
+    public function confirmarPassAction(Request $request, Usuario $usuario) {
+        $actual = $request->get("passAntigua");
+        $nueva = $request->get("passNueva");
+        $nuevaRep = $request->get("rePassNueva");
 
-        return $this->redirectToRoute('administracion');
+        if($this->getUser()->isAdmin() || (is_object($this->getUser()) && $this->getUser()->getId() == $usuario->getId())) {
+            if($actual != $usuario->getPassword()){
+                $this->addFlash('error', 'La contraseña actual no coincide');
+                return $this->redirectToRoute('cambiar_pass', ['id' => $usuario]);
+            }elseif($nueva == $nuevaRep){
+                try{
+                    if ($nuevaRep) {
+                        $clave = $this->get('security.password_encoder')
+                            ->encodePassword($usuario, $nuevaRep);
+                        $usuario->setPassword($clave);
+                    }
+                    $this->getDoctrine()->getManager()->flush();
+                    $this->addFlash('estado', 'La contraseña se ha modificado correctamente');
+                }catch (Exception $exception){
+                    $this->addFlash('error', 'Hubo algún problema al cambiar la contraseña');
+                }
+            }
+        }else{
+            $this->addFlash('error', 'No tienes permisos para modificar la contraseña');
+        }
+
+        return $this->redirectToRoute('perfil');
     }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     * @Route("/usuario/cambiar-foto", name="cambiar_foto")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     */
+    public function cambiarFotoAction(Request $request) {
+        /**@var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $this->getUser();
+
+        $foto_antigua = $usuario->getFoto();
+        $foto_seleccionada = $request->get("foto");
+
+        if(!empty($foto_seleccionada) && $foto_seleccionada != null){
+            $ext = $foto_seleccionada->guessExtension();
+            if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
+                $nombre_imagen = $usuario->getId().time().'.'.$ext;
+                var_dump($nombre_imagen);
+                $foto_seleccionada->move("uploads/users", $nombre_imagen);
+                $usuario->setFoto($nombre_imagen);
+            }else{
+                $this->addFlash('error', 'Debes seleccionar una foto con formato: jpg, jpeg, png o gif');
+            }
+        }
+
+        $em->persist($usuario);
+        $flush = $em->flush();
+
+        if($flush == null){ //No devuelve ningun error
+            $this->addFlash('estado', 'Foto de perfil cambiada correctamente');
+            unlink($foto_antigua);
+        }else{
+            $this->addFlash('error', 'No se ha podido cambiar la foto de perfil');
+        }
+
+        return $this->redirectToRoute('perfil');
+    }
+
 }

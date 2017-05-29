@@ -110,7 +110,7 @@ class AdminController extends Controller
             $this->addFlash('estado', 'El usuario se ha eliminado con éxito');
         }
         catch(Exception $e) {
-            $this->addFlash('error', 'No se han podido eliminar el usuario');
+            $this->addFlash('error', 'Hubo algún error. No se han podido eliminar el usuario');
         }
         return $this->redirectToRoute('administracion');
     }

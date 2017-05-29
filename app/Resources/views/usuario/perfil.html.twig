@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% block title %}Inicio | Bolsa de empleo{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('assets/js/main.js') }}"></script>
@@ -22,14 +24,6 @@
 
 {% block content %}
     <div class="clearfix"></div>
-    {#{% if error %}#}
-        {#<div class="alert alert-danger alert-dismissible div-alert">#}
-            {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-                {#<span aria-hidden="true">&times;</span>#}
-            {#</button>#}
-            {#{{ error.messageKey|trans(error.messageData, 'security') }}#}
-        {#</div>#}
-    {#{% endif %}#}
     <div class="container box-perfil col-lg-12">
         <div class="container col-lg-3 card-principal box-avatar">
             <div class="avatar">
@@ -51,13 +45,15 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Escoge una imagen de perfil</h4>
                     </div>
-                    <div class="modal-body">
-                        <input type="file" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+                    <form action="{{ path('cambiar_foto') }}" method="POST" name="cambio_foto">
+                        <div class="modal-body">
+                            <input type="file" name="foto" accept="image/*" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
