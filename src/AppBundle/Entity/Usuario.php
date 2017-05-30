@@ -30,10 +30,11 @@ class Usuario implements UserInterface{
     private $tipo_doc;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var string
      *
      * @Assert\NotBlank()
+     * @Assert\
      */
     private $num_identi;
 
