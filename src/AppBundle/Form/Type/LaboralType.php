@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
 
 class LaboralType extends AbstractType
 {
@@ -24,7 +25,8 @@ class LaboralType extends AbstractType
                 'label' => 'Nombre de la empresa',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-empresa'
+                    'class' => 'form-empresa',
+                    'placeholder' => 'ej. Cámara de comercio Linares'
                 ]
             ])
             ->add('actividad', ChoiceType::class, [
@@ -58,35 +60,33 @@ class LaboralType extends AbstractType
                 'label' => 'Puesto de trabajo',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-puesto'
+                    'class' => 'form-puesto',
+                    'placeholder' => 'ej. Administración - Contabilidad'
                 ]
             ])
             ->add('tareas', TextType::class, [
                 'label' => 'Tareas desempeñadas',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-tareas'
+                    'class' => 'form-tareas',
+                    'placeholder' => 'ej. Gestiones administrativas, registros contables'
                 ]
             ])
             ->add('fechaInicio', DateType::class, [
-                'label' => 'Fecha de inicio (mm-aaaa)',
+                'label' => 'Fecha de inicio',
                 'required' => true,
-                'format' => 'mm-yyyy',
-                'html5' => false,
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'js-datepicker'
-                ]
+                'placeholder' => [
+                    'month' => 'Mes', 'year' => 'Año'
+                ],
+                'years' => range(1970, Date('Y'))
             ])
             ->add('fechaFin', DateType::class, [
-                'label' => 'Fecha de finalización (mm-aaaa)',
+                'label' => 'Fecha de finalización',
                 'required' => true,
-                'format' => 'mm-yyyy',
-                'html5' => false,
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'js-datepicker'
-                ]
+                'placeholder' => [
+                    'month' => 'Mes', 'year' => 'Año'
+                ],
+                'years' => range(1970, Date('Y'))
             ]);
     }
     /**

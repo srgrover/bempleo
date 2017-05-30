@@ -45,15 +45,23 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Escoge una imagen de perfil</h4>
                     </div>
-                    <form action="{{ path('cambiar_foto') }}" method="POST" name="cambio_foto">
-                        <div class="modal-body">
-                            <input type="file" name="foto" accept="image/*" />
-                        </div>
+                    <div class="modal-body">
+                        <label class="label label-info text-center" style="display: block">
+                            <i class="fa fa-info-circle"></i>
+                            Se recomienda usar una imagen cuadrada (ej. 200x200, 400x400)
+                        </label>
+                        {{ form_start(formulario) }}
+                        {{ form_widget(formulario) }}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
                         </div>
-                    </form>
+                        {{ form_end(formulario) }}
+                    </div>
+
                 </div>
             </div>
         </div>

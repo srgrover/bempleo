@@ -261,14 +261,6 @@ class EditarUsuarioType extends AbstractType
                 'attr' => [
                     'class' => 'form-pref-ocupacion'
                 ]
-            ])
-            ->add('foto', FileType::class, [
-                'label' => 'Foto de perfil',
-                'required' => false,
-                'data_class' => null,
-                'attr' => [
-                    'class' => 'form-foto form-control'
-                ]
             ]);
     }
 

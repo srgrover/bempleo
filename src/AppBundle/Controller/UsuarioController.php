@@ -8,10 +8,12 @@ use AppBundle\Entity\Idioma;
 use AppBundle\Entity\Informatica;
 use AppBundle\Entity\Laboral;
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\PassType;
 use AppBundle\Form\Type\EditarUsuarioType;
 use AppBundle\Form\Type\FcomplementariaType;
 use AppBundle\Form\Type\FormacionType;
 use AppBundle\Form\Type\IdiomaType;
+use AppBundle\Form\Type\ImagenType;
 use AppBundle\Form\Type\InformaticaType;
 use AppBundle\Form\Type\LaboralType;
 use AppBundle\Form\Type\RegisterType;
@@ -333,10 +335,11 @@ class UsuarioController extends Controller
     /**
      * @Security("is_granted('ROLE_USER')")
      * @Route("/perfil", name="perfil")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function PerfilAction() {
+    public function PerfilAction(Request $request) {
 
         if(is_object($this->getUser()) && $this->getUser()->isAdmin()){
             return $this->redirect('administracion');
@@ -345,6 +348,33 @@ class UsuarioController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = $this->getUser();
+        $foto_antigua = $usuario->getFoto();
+
+        $form = $this->createForm(ImagenType::class, $usuario);
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            $foto_seleccionada = $form->get('foto')->getData();
+            $ext = $foto_seleccionada->guessExtension();
+
+            if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
+                $nombre_imagen = $usuario->getId().time().'.'.$ext;
+                $foto_seleccionada->move("uploads/users", $nombre_imagen);
+                $usuario->setFoto($nombre_imagen);
+            }else{
+                $this->addFlash('error', 'Debes seleccionar una foto con formato: jpg, jpeg, png o gif');
+            }
+
+            $flush = $em->flush();
+
+            if($flush == null){ //No devuelve ningun error
+                $this->addFlash('estado', 'Foto de perfil cambiada correctamente');
+                unlink("uploads/users/". $foto_antigua);
+            }else{
+                $this->addFlash('error', 'No se ha podido cambiar la foto de perfil');
+            }
+
+            return $this->redirectToRoute('perfil');
+        }
 
 
         if(empty($usuario) || !is_object($usuario)){
@@ -393,20 +423,6 @@ class UsuarioController extends Controller
             ->getQuery()
             ->getResult();
 
-//        $form = $this->createForm(RegisterType::class, $usuario, [
-//            'admin' => $this->isGranted('ROLE_ADMIN')
-//        ]);
-//        $form->handleRequest($request);
-//        if ($form->isValid() && $form->isSubmitted()) {
-//            $claveFormulario = $form->get('nueva')->get('first')->getData();
-//            if ($claveFormulario) {
-//                $clave = $this->get('security.password_encoder')
-//                    ->encodePassword($usuario, $claveFormulario);
-//                $usuario->setClave($clave);
-//            }
-//            $this->getDoctrine()->getManager()->flush();
-//        }
-
 
         return $this->render('usuario/perfil.html.twig', [
             'usuario' => $usuario,
@@ -414,64 +430,59 @@ class UsuarioController extends Controller
             'complementaria' => $complementaria_usuario,
             'laboral' => $laboral_usuario,
             'idiomas' => $idiomas_usuario,
-            'informatica' => $informatica_usuario
-//            'form' => $form->createView()
+            'informatica' => $informatica_usuario,
+            'formulario' => $form->createView()
         ]);
     }
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @Route("/usuario/cambiar-contraseña/{id}", name="cambiar_pass")
-     * @param Usuario $usuario
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function cambiarPassAction(Usuario $usuario) {
-
-        if($this->getUser()->isAdmin() || (is_object($this->getUser()) && $this->getUser()->getId() == $usuario->getId())){
-            return $this->render(':administracion:cambiar_contraseña.html.twig', [
-                'usuario' => $usuario
-            ]);
-        }else{
-            return $this->redirectToRoute('perfil');
-        }
-    }
-
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @Route("/usuario/confirmar-contraseña/{id}", name="confirmar_pass")
+     * @Route("/cambiar-contraseña", name="cambiar_pass")
      * @param Request $request
-     * @param Usuario $usuario
      * @return \Symfony\Component\HttpFoundation\Response
-     * @internal param Request $request
      */
-    public function confirmarPassAction(Request $request, Usuario $usuario) {
-        $actual = $request->get("passAntigua");
-        $nueva = $request->get("passNueva");
-        $nuevaRep = $request->get("rePassNueva");
+    public function cambiarPassAction(Request $request){
+        $usuario = $this->getUser();
+        $form = $this->createForm(\AppBundle\Form\Type\PassType::class, $usuario);
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            if(is_object($this->getUser()) && $this->getUser()->getId() == $usuario->getId()) {
+                $actual = $form->get('actual')->getData();
+                $clave_actual = $this->get('security.password_encoder')
+                    ->encodePassword($usuario, $actual);
 
-        if($this->getUser()->isAdmin() || (is_object($this->getUser()) && $this->getUser()->getId() == $usuario->getId())) {
-            if($actual != $usuario->getPassword()){
-                $this->addFlash('error', 'La contraseña actual no coincide');
-                return $this->redirectToRoute('cambiar_pass', ['id' => $usuario]);
-            }elseif($nueva == $nuevaRep){
-                try{
-                    if ($nuevaRep) {
+                if($clave_actual != $usuario->getPassword()){
+                    $this->addFlash('error', 'La contraseña actual no coincide');
+                    if($this->getUser()->isAdmin()){
+                        return $this->redirectToRoute('cambiar_pass', ['id' => $usuario]);
+                    }else{
+                        return $this->redirectToRoute('cambiar_pass');
+                    }
+                }
+                try {
+                    $claveFormulario = $form->get('nueva')->get('first')->getData();
+                    if ($claveFormulario) {
                         $clave = $this->get('security.password_encoder')
-                            ->encodePassword($usuario, $nuevaRep);
+                            ->encodePassword($usuario, $claveFormulario);
                         $usuario->setPassword($clave);
                     }
                     $this->getDoctrine()->getManager()->flush();
-                    $this->addFlash('estado', 'La contraseña se ha modificado correctamente');
-                }catch (Exception $exception){
-                    $this->addFlash('error', 'Hubo algún problema al cambiar la contraseña');
+                    $this->addFlash('estado', 'Contraseña cambiada con éxito!');
+                    return $this->redirectToRoute('perfil');
+                } catch (Exception $exception) {
+                    $this->addFlash('error', 'Hubo algún problema al actualizar la contraseña');
                 }
+            }else{
+                $this->addFlash('error', 'No tienes permisos para actualizar la contraseña');
+                return $this->redirectToRoute('perfil');
             }
-        }else{
-            $this->addFlash('error', 'No tienes permisos para modificar la contraseña');
         }
-
-        return $this->redirectToRoute('perfil');
+        return $this->render(':administracion:cambiar_contraseña.html.twig', [
+            'formulario' => $form->createView(),
+            'usuario' => $usuario
+        ]);
     }
+
 
     /**
      * @Security("is_granted('ROLE_USER')")

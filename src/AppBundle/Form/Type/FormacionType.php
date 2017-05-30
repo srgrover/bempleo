@@ -8,7 +8,7 @@
  */
 namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,18 +42,13 @@ class FormacionType extends AbstractType
                     'placeholder' => 'ej. Educación infantil'
                 ]
             ])
-            ->add('obtencion', BirthdayType::class, [
-                'label' => 'Fecha de obtención (mm-aaaa)',
+            ->add('obtencion', DateType::class, [
+                'label' => 'Fecha de obtención',
                 'required' => true,
-                'attr' =>[
-                    'placeholder' => 'ej. 03-2001'
-                ],
-                'widget' => 'single_text',
-                // this is actually the default format for single_text
-                'format' => 'mm-yyyy',
                 'placeholder' => [
-                    'month' => 'Mes', 'year' => 'Año',
-                ]
+                    'month' => 'Mes', 'year' => 'Año'
+                ],
+                'years' => range(1970, Date('Y'))
             ]);
     }
     /**

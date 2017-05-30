@@ -1,32 +1,24 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="admin-panel text-center">
-        <div class="container col-lg-4"></div>
-        <div class="container col-lg-4 card-principal">
-            <h2>Cambiar contraseña</h2>
-            <hr />
-            <form method="post" action="{{ path('confirmar_pass', {'id': usuario.id}) }}" name="confirmar">
-                <label for="passAntigua">Contraseña antigua</label>
-                <input type="password" id="passAntigua" class="form-control" name="passAntigua"/>
-                <label for="passNueva">Contraseña nueva</label>
-                <input type="password" id="passNueva" class="form-control" name="passNueva"/>
-                <label for="rePassNueva">Repite contraseña nueva</label>
-                <input type="password" id="rePassNueva" class="form-control" name="rePassNueva"/>
-                <div class="col-lg-12 card-footer">
-                    <a href="{{ path('perfil') }}" class="btn btn-info">
-                        <i class="fa fa-arrow-left"></i>
-                        Volver
-                    </a>
-                    <button type="submit" name="cambiar" class="btn btn-success">
-                        <i class="fa fa-check"></i>
-                        Cambiar
-                    </button>
-                </div>
-
-
-            </form>
+    <div class="col-lg-3"></div>
+    <div class="container col-lg-6 card-principal text-center" style="margin-top: 80px">
+        <h1 class="card-header">
+            Cambiar contraseña
+        </h1>
+        <hr />
+        {{ form_start(formulario) }}
+        {{ form_widget(formulario) }}
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <button type="submit" name="enviar" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Guardar
+                </button>
+            </div>
         </div>
+        {{ form_end(formulario) }}
     </div>
 
 {% endblock %}

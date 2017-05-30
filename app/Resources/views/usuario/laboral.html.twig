@@ -1,5 +1,15 @@
 {% extends 'layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#appbundle_laboral_fechaInicio_day').hide();
+            $('#appbundle_laboral_fechaFin_day').hide();
+        })
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="container ">
         <div class="card-registro col-lg-7">
