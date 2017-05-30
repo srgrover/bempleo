@@ -114,4 +114,34 @@ class AdminController extends Controller
         }
         return $this->redirectToRoute('administracion');
     }
+
+    /**
+     * @Route("/cambiar-contraseña/{id}", name="cambiar_pass_usuario")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function cambiarPassAction(Request $request, Usuario $usuario){
+        $form = $this->createForm(\AppBundle\Form\Type\PassType::class, $usuario);
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            try {
+                $claveFormulario = $form->get('nueva')->get('first')->getData();
+                if ($claveFormulario) {
+                    $clave = $this->get('security.password_encoder')
+                        ->encodePassword($usuario, $claveFormulario);
+                    $usuario->setPassword($clave);
+                }
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('estado', 'Contraseña cambiada con éxito!');
+                return $this->redirectToRoute('perfil');
+            } catch (Exception $exception) {
+                $this->addFlash('error', 'Hubo algún problema al actualizar la contraseña');
+            }
+        }
+
+        return $this->render(':administracion:cambiar_contraseña.html.twig', [
+            'formulario' => $form->createView(),
+            'usuario' => $usuario
+        ]);
+    }
 }

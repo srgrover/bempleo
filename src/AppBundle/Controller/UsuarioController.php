@@ -368,7 +368,9 @@ class UsuarioController extends Controller
 
             if($flush == null){ //No devuelve ningun error
                 $this->addFlash('estado', 'Foto de perfil cambiada correctamente');
-                unlink("uploads/users/". $foto_antigua);
+                if($foto_antigua != null) {
+                    unlink("uploads/users/" . $foto_antigua);
+                }
             }else{
                 $this->addFlash('error', 'No se ha podido cambiar la foto de perfil');
             }
@@ -447,18 +449,6 @@ class UsuarioController extends Controller
         $form->handleRequest($request);
         if ($form->isValid() && $form->isSubmitted()) {
             if(is_object($this->getUser()) && $this->getUser()->getId() == $usuario->getId()) {
-                $actual = $form->get('actual')->getData();
-                $clave_actual = $this->get('security.password_encoder')
-                    ->encodePassword($usuario, $actual);
-
-                if($clave_actual != $usuario->getPassword()){
-                    $this->addFlash('error', 'La contraseña actual no coincide');
-                    if($this->getUser()->isAdmin()){
-                        return $this->redirectToRoute('cambiar_pass', ['id' => $usuario]);
-                    }else{
-                        return $this->redirectToRoute('cambiar_pass');
-                    }
-                }
                 try {
                     $claveFormulario = $form->get('nueva')->get('first')->getData();
                     if ($claveFormulario) {
@@ -477,51 +467,11 @@ class UsuarioController extends Controller
                 return $this->redirectToRoute('perfil');
             }
         }
+
         return $this->render(':administracion:cambiar_contraseña.html.twig', [
             'formulario' => $form->createView(),
             'usuario' => $usuario
         ]);
-    }
-
-
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @Route("/usuario/cambiar-foto", name="cambiar_foto")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @internal param Request $request
-     */
-    public function cambiarFotoAction(Request $request) {
-        /**@var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $usuario = $this->getUser();
-
-        $foto_antigua = $usuario->getFoto();
-        $foto_seleccionada = $request->get("foto");
-
-        if(!empty($foto_seleccionada) && $foto_seleccionada != null){
-            $ext = $foto_seleccionada->guessExtension();
-            if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
-                $nombre_imagen = $usuario->getId().time().'.'.$ext;
-                var_dump($nombre_imagen);
-                $foto_seleccionada->move("uploads/users", $nombre_imagen);
-                $usuario->setFoto($nombre_imagen);
-            }else{
-                $this->addFlash('error', 'Debes seleccionar una foto con formato: jpg, jpeg, png o gif');
-            }
-        }
-
-        $em->persist($usuario);
-        $flush = $em->flush();
-
-        if($flush == null){ //No devuelve ningun error
-            $this->addFlash('estado', 'Foto de perfil cambiada correctamente');
-            unlink($foto_antigua);
-        }else{
-            $this->addFlash('error', 'No se ha podido cambiar la foto de perfil');
-        }
-
-        return $this->redirectToRoute('perfil');
     }
 
 }

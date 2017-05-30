@@ -5,6 +5,9 @@
     <div class="container col-lg-6 card-principal text-center" style="margin-top: 80px">
         <h1 class="card-header">
             Cambiar contraseña
+            {% if app.user.isAdmin() %}
+                de {{ usuario.nombre }} {{ usuario.apellidos }} ({{ usuario.numIdenti }})
+            {% endif %}
         </h1>
         <hr />
         {{ form_start(formulario) }}
