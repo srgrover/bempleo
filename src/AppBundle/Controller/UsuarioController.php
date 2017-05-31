@@ -145,20 +145,24 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/editar/formacion/{id}", name="editar_formacion", methods={"GET", "POST"})
+     * @Route("/añadir/formacion/{usuario}", name="add_formacion_usuario")
      * @Route("/añadir/formacion", name="add_formacion", methods={"GET", "POST"})
+     * @Route("/editar/formacion/{id}", name="editar_formacion", methods={"GET", "POST"})
      * @param Request $request
      * @param Formacion|null $formacion
+     * @param Usuario|null $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroFormacionAction(Request $request, Formacion $formacion = null){
+    public function RegistroFormacionAction(Request $request, Formacion $formacion = null, Usuario $usuario = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
 
         if (null == $formacion) {
             $formacion = new Formacion();
-            $usuario = $this->getUser();
+            if($usuario == null){
+                $usuario = $this->getUser();
+            }
             $formacion->setUsuario($usuario);
             $em->persist($formacion);
         }
@@ -184,19 +188,23 @@ class UsuarioController extends Controller
 
 
     /**
+     * @Route("/añadir/formacion/complementaria/{usuario}", name="add_complementaria_usuario")
      * @Route("/añadir/formacion/complementaria", name="add_complementaria", methods={"GET", "POST"})
      * @Route("/editar/formacion/complementaria/{id}", name="editar_complementaria", methods={"GET", "POST"})
      * @param Request $request
      * @param Fcomplementaria|null $fcomplementaria
+     * @param Usuario|null $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroComplementariaAction(Request $request, Fcomplementaria $fcomplementaria = null){
+    public function RegistroComplementariaAction(Request $request, Fcomplementaria $fcomplementaria = null, Usuario $usuario = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $fcomplementaria) {
             $fcomplementaria = new Fcomplementaria();
-            $usuario = $this->getUser();
+            if($usuario == null){
+                $usuario = $this->getUser();
+            }
             $fcomplementaria->setUsuario($usuario);
             $em->persist($fcomplementaria);
         }
@@ -221,19 +229,22 @@ class UsuarioController extends Controller
     }
 
     /**
+     * @Route("/añadir/laboral/{usuario}", name="add_laboral_usuario", methods={"GET", "POST"})
      * @Route("/añadir/laboral", name="add_laboral", methods={"GET", "POST"})
      * @Route("/editar/laboral/{id}", name="editar_laboral", methods={"GET", "POST"})
      * @param Request $request
      * @param Laboral|null $laboral
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroLaboralAction(Request $request, Laboral $laboral = null){
+    public function RegistroLaboralAction(Request $request, Laboral $laboral = null, Usuario $usuario = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $laboral) {
             $laboral = new Laboral();
-            $usuario = $this->getUser();
+            if($usuario == null){
+                $usuario = $this->getUser();
+            }
             $laboral->setUsuario($usuario);
             $em->persist($laboral);
         }
@@ -258,19 +269,22 @@ class UsuarioController extends Controller
     }
 
     /**
+     * @Route("/añadir/idioma/{usuario}", name="add_idioma_usuario", methods={"GET", "POST"})
      * @Route("/añadir/idioma", name="add_idioma", methods={"GET", "POST"})
      * @Route("/editar/idioma/{id}", name="editar_idioma", methods={"GET", "POST"})
      * @param Request $request
      * @param Idioma|null $idioma
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroIdiomasAction(Request $request, Idioma $idioma = null){
+    public function RegistroIdiomasAction(Request $request, Idioma $idioma = null, Usuario $usuario = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $idioma) {
             $idioma = new Idioma();
-            $usuario = $this->getUser();
+            if($usuario == null){
+                $usuario = $this->getUser();
+            }
             $idioma->setUsuario($usuario);
             $em->persist($idioma);
         }
@@ -295,19 +309,23 @@ class UsuarioController extends Controller
     }
 
     /**
+     * @Route("/añadir/informatica/{usuario}", name="add_informatica_usuario", methods={"GET", "POST"})
      * @Route("/añadir/informatica", name="add_informatica", methods={"GET", "POST"})
      * @Route("/editar/informatica/{id}", name="editar_informatica", methods={"GET", "POST"})
      * @param Request $request
      * @param Informatica|null $informatica
+     * @param Usuario|null $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroInformaticaAction(Request $request, Informatica $informatica = null){
+    public function RegistroInformaticaAction(Request $request, Informatica $informatica = null, Usuario $usuario = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $informatica) {
             $informatica = new Informatica();
-            $usuario = $this->getUser();
+            if($usuario == null){
+                $usuario = $this->getUser();
+            }
             $informatica->setUsuario($usuario);
             $em->persist($informatica);
         }

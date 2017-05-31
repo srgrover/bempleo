@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\EditarUsuarioType;
+use AppBundle\Form\Type\ImagenType;
+use AppBundle\Form\Type\PassType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -118,10 +120,11 @@ class AdminController extends Controller
     /**
      * @Route("/cambiar-contraseña/{id}", name="cambiar_pass_usuario")
      * @param Request $request
+     * @param Usuario $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cambiarPassAction(Request $request, Usuario $usuario){
-        $form = $this->createForm(\AppBundle\Form\Type\PassType::class, $usuario);
+        $form = $this->createForm(PassType::class, $usuario);
         $form->handleRequest($request);
         if ($form->isValid() && $form->isSubmitted()) {
             try {
@@ -142,6 +145,111 @@ class AdminController extends Controller
         return $this->render(':administracion:cambiar_contraseña.html.twig', [
             'formulario' => $form->createView(),
             'usuario' => $usuario
+        ]);
+    }
+
+
+    /**
+     * @Route("/perfil/{id}", name="perfil_usuario")
+     * @param Request $request
+     * @param Usuario $usuario
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     */
+    public function PerfilAction(Request $request, Usuario $usuario) {
+
+        if(is_object($this->getUser()) && !$this->getUser()->isAdmin()){
+            return $this->redirectToRoute('perfil');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $foto_antigua = $usuario->getFoto();
+
+        $form = $this->createForm(ImagenType::class, $usuario);
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            $foto_seleccionada = $form->get('foto')->getData();
+            $ext = $foto_seleccionada->guessExtension();
+
+            if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
+                $nombre_imagen = $usuario->getId().time().'.'.$ext;
+                $foto_seleccionada->move("uploads/users", $nombre_imagen);
+                $usuario->setFoto($nombre_imagen);
+            }else{
+                $this->addFlash('error', 'Debes seleccionar una foto con formato: jpg, jpeg, png o gif');
+            }
+
+            $flush = $em->flush();
+
+            if($flush == null){ //No devuelve ningun error
+                $this->addFlash('estado', 'Foto de perfil cambiada correctamente');
+                if($foto_antigua != null) {
+                    unlink("uploads/users/" . $foto_antigua);
+                }
+            }else{
+                $this->addFlash('error', 'No se ha podido cambiar la foto de perfil');
+            }
+
+            return $this->redirectToRoute('perfil');
+        }
+
+
+        if(empty($usuario) || !is_object($usuario)){
+            return $this->redirectToRoute('entrar');
+        }
+
+        $formacion_usuario = $em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:Formacion', 'f')
+            ->where('f.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->orderBy('f.obtencion', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $complementaria_usuario = $em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:Fcomplementaria', 'f')
+            ->where('f.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->orderBy('f.anio', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $laboral_usuario = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Laboral', 'l')
+            ->where('l.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
+        $idiomas_usuario = $em->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Idioma', 'i')
+            ->where('i.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
+        $informatica_usuario = $em->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Informatica', 'i')
+            ->where('i.usuario = :id')
+            ->setParameter('id', $usuario->getId())
+            ->getQuery()
+            ->getResult();
+
+
+        return $this->render(':administracion:perfil_usuario.html.twig', [
+            'usuario' => $usuario,
+            'formacion' => $formacion_usuario,
+            'complementaria' => $complementaria_usuario,
+            'laboral' => $laboral_usuario,
+            'idiomas' => $idiomas_usuario,
+            'informatica' => $informatica_usuario,
+            'formulario' => $form->createView()
         ]);
     }
 }

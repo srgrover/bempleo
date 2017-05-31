@@ -1,0 +1,512 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Inicio | Bolsa de empleo{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/perfil.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="mainbody container-fluid">
+        <div class="row">
+            <div style="padding-top:50px;"> </div>
+            <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="media">
+                            <div align="center">
+                                <div class="avatar">
+                                    {% if usuario.foto == null %}
+                                        <img src="{{ asset('assets/images/perfil-default.png') }}" alt="avatar" />
+                                    {% else %}
+                                        <img src="{{ asset('uploads/users/'~usuario.foto) }}" alt="avatar" />
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <hr>
+                                <h3><strong>Bio</strong></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel gravida metus, non ultrices sapien. Morbi odio metus, dapibus non nibh id amet.</p>
+                                <hr>
+                                <h3><strong>Location</strong></h3>
+                                <p>Earth</p>
+                                <hr>
+                                <h3><strong>Gender</strong></h3>
+                                <p>Unknown</p>
+                                <hr>
+                                <h3><strong>Birthday</strong></h3>
+                                <p>January 01 1901</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <span>
+                            <h1 class="panel-title pull-left" style="font-size:30px;">
+                                {{ usuario.nombre }} {{ usuario.apellidos }}
+                                <small>{{ usuario.email }}</small>
+                            </h1>
+                            <div class="dropdown pull-right">
+                                <a href="{{ path('perfil') }}"><i class="fa fa-angle-left"></i>&nbsp;Volver</a>
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <i class="fa fa-cog"></i>
+                                    Administrar
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <a href="{{ path('editar_usuario', {'id' : usuario.id}) }}" class="link-edit">
+                                            <i class="fa fa-edit"></i>
+                                            Editar
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="{{ path('borrar_usuario', {'id' : usuario.id}) }}" class="link-delete">
+                                            <i class="fa fa-trash"></i>
+                                            Eliminar
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </span>
+                        <br><br><hr>
+                        <span class="pull-left">
+                            <a class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-fw fa-book" aria-hidden="true"></i>
+                                Formación <span class="badge">{{ formacion|length }}</span>
+                            </a>
+                            <a class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-fw fa-picture-o" aria-hidden="true"></i>
+                                Complementaria <span class="badge">{{ complementaria|length }}</span>
+                            </a>
+                            <a class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-fw fa-users" aria-hidden="true"></i>
+                                Laboral <span class="badge">{{ laboral|length }}</span>
+                            </a>
+                            <a class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-fw fa-users" aria-hidden="true"></i>
+                                Informática <span class="badge">{{ informatica|length }}</span>
+                            </a>
+                            <a class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-fw fa-users" aria-hidden="true"></i>
+                                Idiomas <span class="badge">{{ idiomas|length }}</span>
+                            </a>
+
+                        </span>
+                            <span class="pull-right">
+                            <span class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-lg fa-at" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ usuario.email }}"></i>
+                            </span>
+                            <span class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-lg fa-mobile" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ usuario.telefono }}"></i>
+                            </span>
+                            <span class="btn btn-link" style="text-decoration:none;">
+                                <i class="fa fa-lg fa-address-card" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ usuario.domicilio }}"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <hr>
+
+                {# FORMACIÓN #}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>
+                            <a href="#" style="text-decoration:none;">
+                                <strong>
+                                    <i class="fa fa-book"></i>
+                                    FORMACIÓN
+                                </strong>
+                            </a> –
+                            <small>
+                                <small>
+                                    <span style="text-decoration:none; color:grey;">
+                                        <i>
+                                            {{ formacion|length }}
+                                        </i> {% if formacion|length == 1 %}elemento añadido{% else %}elementos añadidos{% endif %}
+                                    </span>
+                                </small>
+                            </small>
+                        </h4>
+                        {% for item in formacion %}
+                        <span>
+                            <div class="navbar-right">
+                                <div class="dropdown">
+                                    <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                        <li>
+                                            <a href="{{ path('editar_formacion', {'id' : item.id}) }}" class="link-edit">
+                                                <i class="fa fa-fw fa-edit" aria-hidden="true"></i>
+                                                Editar
+                                            </a>
+                                        </li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>
+                                            <a href="{{ path('eliminar_formacion', {'id' : item.id}) }}" class="link-delete" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                                <i class="fa fa-fw fa-trash" aria-hidden="true"></i>
+                                                Eliminar
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </span>
+                        <hr>
+                        <div class="post-content">
+                            <p>
+                                Titulado en {{ item.titulacion }} en la especialidad de {{ item.especialidad }} en el centro {{ item.nombreCentro }}
+                            </p>
+                            <p>
+                                <i class="fa fa-calendar"></i>
+                                Fecha de obtención: {{ item.obtencion|date('m-Y') }}
+                            </p>
+                        </div>
+                        {% endfor %}
+                        <hr>
+                        <div>
+                            <div class="pull-right btn-group">
+                                <a href="{{ path('add_formacion_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Añadir
+                                </a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                {# COMPLEMENTARIA #}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>
+                            <a href="#" style="text-decoration:none;">
+                                <strong>
+                                    <i class="fa fa-book"></i>
+                                    FORMACIÓN COMPLEMENTARIA
+                                </strong>
+                            </a> –
+                            <small>
+                                <small>
+                                    <span style="text-decoration:none; color:grey;">
+                                        <i>
+                                            {{ complementaria|length }}
+                                        </i> {% if complementaria|length == 1 %}elemento añadido{% else %}elementos añadidos{% endif %}
+                                    </span>
+                                </small>
+                            </small>
+                        </h4>
+                        {% for item in complementaria %}
+                            <span>
+                            <div class="navbar-right">
+                                <div class="dropdown">
+                                    <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                        <li>
+                                            <a href="{{ path('editar_complementaria', {'id' : item.id}) }}" class="link-edit">
+                                                <i class="fa fa-fw fa-edit" aria-hidden="true"></i>
+                                                Editar
+                                            </a>
+                                        </li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>
+                                            <a href="{{ path('eliminar_complementaria', {'id' : item.id}) }}" class="link-delete" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                                <i class="fa fa-fw fa-trash" aria-hidden="true"></i>
+                                                Eliminar
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </span>
+                            <hr>
+                            <div class="post-content">
+                                <p>
+                                    Titulado en {{ item.titulacion }} en el centro {{ item.nombreCentro }} - {{ item.horas }} horas
+                                </p>
+                                <p>
+                                    <i class="fa fa-calendar"></i>
+                                    Obtenido en el año {{ item.anio }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                        <hr>
+                        <div>
+                            <div class="pull-right btn-group">
+                                <a href="{{ path('add_complementaria_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Añadir
+                                </a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                {# LABORAL #}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>
+                            <a href="#" style="text-decoration:none;">
+                                <strong>
+                                    <i class="fa fa-building"></i>
+                                    EXPERIENCIA LABORAL
+                                </strong>
+                            </a> –
+                            <small>
+                                <small>
+                                    <span style="text-decoration:none; color:grey;">
+                                        <i>
+                                            {{ laboral|length }}
+                                        </i> {% if laboral|length == 1 %}elemento añadido{% else %}elementos añadidos{% endif %}
+                                    </span>
+                                </small>
+                            </small>
+                        </h4>
+                        {% for item in laboral %}
+                            <span>
+                                <div class="navbar-right">
+                                    <div class="dropdown">
+                                        <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="fa fa-cog" aria-hidden="true"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                            <li>
+                                                <a href="{{ path('editar_laboral', {'id' : item.id}) }}" class="link-edit">
+                                                    <i class="fa fa-fw fa-edit" aria-hidden="true"></i>
+                                                    Editar
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li>
+                                                <a href="{{ path('eliminar_laboral', {'id' : item.id}) }}" class="link-delete" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                                    <i class="fa fa-fw fa-trash" aria-hidden="true"></i>
+                                                    Eliminar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </span>
+                            <hr>
+                            <div class="post-content">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-4 card-item">
+                                        <span>
+                                            <label>Empresa:</label> <span><small>{{ item.empresa }}</small></span>
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-4 card-item">
+                                        <span>
+                                            <label>Puesto:</label> <small>{{ item.puesto }}</small>
+                                        </span>
+                                        <span>
+                                            <label>Actividad:</label> <small>{{ item.actividad }}</small>
+                                        </span>
+                                        <span>
+                                            <label>Tareas:</label> <small>{{ item.tareas }}</small>
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-4 card-item">
+                                        <span class="text-right">
+                                            <i class="fa fa-calendar"></i>
+                                            <label>Fecha:</label> <small>{{ item.fechaInicio|date('m/Y') }} - {{ item.fechaFin|date('m/Y') }}</small>
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-4">
+
+                                    </div>
+                                    <div class="col-lg-5 card-item">
+
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        {% endfor %}
+                        <hr>
+                        <div>
+                            <div class="pull-right btn-group">
+                                <a href="{{ path('add_laboral_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Añadir
+                                </a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                {# IDIOMAS #}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>
+                            <a href="#" style="text-decoration:none;">
+                                <strong>
+                                    <i class="fa fa-building"></i>
+                                    IDIOMAS
+                                </strong>
+                            </a> –
+                            <small>
+                                <small>
+                                    <span style="text-decoration:none; color:grey;">
+                                        <i>
+                                            {{ idiomas|length }}
+                                        </i> {% if idiomas|length == 1 %}elemento añadido{% else %}elementos añadidos{% endif %}
+                                    </span>
+                                </small>
+                            </small>
+                        </h4>
+                        {% for item in idiomas %}
+                            <span>
+                                <div class="navbar-right">
+                                    <div class="dropdown">
+                                        <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="fa fa-cog" aria-hidden="true"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                            <li>
+                                                <a href="{{ path('editar_idioma', {'id' : item.id}) }}" class="link-edit">
+                                                    <i class="fa fa-fw fa-edit" aria-hidden="true"></i>
+                                                    Editar
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li>
+                                                <a href="{{ path('eliminar_idioma', {'id' : item.id}) }}" class="link-delete" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                                    <i class="fa fa-fw fa-trash" aria-hidden="true"></i>
+                                                    Eliminar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </span>
+                            <hr>
+                            <div class="post-content">
+                                <div class="col-lg-12">
+                                    <h4 style="border-bottom: 1px solid #337ab7;padding-bottom: 3px;margin-bottom: 0;">
+                                        {{ item.idioma }}
+                                    </h4>
+
+                                    <span>
+                                    Traducción {{ item.traduce }} - Nivel oral {{ item.habla }} - Nivel escrito {{ item.escribe }}
+                                    </span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        {% endfor %}
+                        <hr>
+                        <div>
+                            <div class="pull-right btn-group">
+                                <a href="{{ path('add_idioma_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Añadir
+                                </a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                {# INFORMÁTICA #}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>
+                            <a href="#" style="text-decoration:none;">
+                                <strong>
+                                    <i class="fa fa-building"></i>
+                                    INFORMÁTICA
+                                </strong>
+                            </a> –
+                            <small>
+                                <small>
+                                    <span style="text-decoration:none; color:grey;">
+                                        <i>
+                                            {{ informatica|length }}
+                                        </i> {% if informatica|length == 1 %}elemento añadido{% else %}elementos añadidos{% endif %}
+                                    </span>
+                                </small>
+                            </small>
+                        </h4>
+                        {% for item in informatica %}
+                            <span>
+                                <div class="navbar-right">
+                                    <div class="dropdown">
+                                        <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="fa fa-cog" aria-hidden="true"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                            <li>
+                                                <a href="{{ path('editar_informatica', {'id' : item.id}) }}" class="link-edit">
+                                                    <i class="fa fa-fw fa-edit" aria-hidden="true"></i>
+                                                    Editar
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li>
+                                                <a href="{{ path('eliminar_informatica', {'id' : item.id}) }}" class="link-delete" onclick="return confirm('¿Estas seguro de que quieres borrar este elemento?. Esta acción no podrá deshacerse en el futuro.');">
+                                                    <i class="fa fa-fw fa-trash" aria-hidden="true"></i>
+                                                    Eliminar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </span>
+                            <hr>
+                            <div class="post-content">
+                                <div class="col-lg-12">
+                                    <span>
+                                        <label>{{ item.campo }}</label> - Nivel {{ item.nivel }}.
+                                    </span><br>
+                                    <span>
+                                        <label>Manejo:</label> {{ item.programasManeja }}
+                                    </span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        {% endfor %}
+                        <hr>
+                        <div>
+                            <div class="pull-right btn-group">
+                                <a href="{{ path('add_informatica_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Añadir
+                                </a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

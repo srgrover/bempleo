@@ -34,7 +34,6 @@ class Usuario implements UserInterface{
      * @var string
      *
      * @Assert\NotBlank()
-     * @Assert\
      */
     private $num_identi;
 
@@ -46,11 +45,6 @@ class Usuario implements UserInterface{
      * @Assert\Length(
      *     min="8",
      *     minMessage="La contraseña debe tener al menos 8 carácteres"
-     * )
-     * @Assert\Regex(
-     *     pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,15}[^'\s]/",
-     *     match=false,
-     *     message="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, otra minúscula y un dígito."
      * )
      */
     private $password;

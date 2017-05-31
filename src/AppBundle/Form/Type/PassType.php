@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PassType extends AbstractType
 {
@@ -33,6 +35,11 @@ class PassType extends AbstractType
                 ],
                 'second_options' =>[
                     'label' => 'Repite la nueva contraseña'
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 8
+                    ])
                 ]
             ]);
     }

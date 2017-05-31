@@ -24,7 +24,7 @@ class EliminarController extends Controller
         $formacion = $formacion_repo->find($id);
         $usuario = $this->getUser();
 
-        if($usuario->getId() == $formacion->getUsuario()->getId()){
+        if($usuario->getId() == $formacion->getUsuario()->getId() || $this->getUser()->isAdmin()){
             $em->remove($formacion);
             $flush = $em->flush();
             if($flush == null){
@@ -52,7 +52,7 @@ class EliminarController extends Controller
         $complementaria = $complementaria_repo->find($id);
         $usuario = $this->getUser();
 
-        if($usuario->getId() == $complementaria->getUsuario()->getId()){
+        if($usuario->getId() == $complementaria->getUsuario()->getId() || $this->getUser()->isAdmin()){
             $em->remove($complementaria);
             $flush = $em->flush();
             if($flush == null){
@@ -80,7 +80,7 @@ class EliminarController extends Controller
         $laboral = $laboral_repo->find($id);
         $usuario = $this->getUser();
 
-        if($usuario->getId() == $laboral->getUsuario()->getId()){
+        if($usuario->getId() == $laboral->getUsuario()->getId() || $this->getUser()->isAdmin()){
             $em->remove($laboral);
             $flush = $em->flush();
             if($flush == null){
@@ -108,7 +108,7 @@ class EliminarController extends Controller
         $informatica = $informatica_repo->find($id);
         $usuario = $this->getUser();
 
-        if($usuario->getId() == $informatica->getUsuario()->getId()){
+        if($usuario->getId() == $informatica->getUsuario()->getId() || $this->getUser()->isAdmin()){
             $em->remove($informatica);
             $flush = $em->flush();
             if($flush == null){
@@ -137,7 +137,7 @@ class EliminarController extends Controller
         $idioma = $idioma_repo->find($id);
         $usuario = $this->getUser();
 
-        if($usuario->getId() == $idioma->getUsuario()->getId()){
+        if($usuario->getId() == $idioma->getUsuario()->getId() || $this->getUser()->isAdmin()){
             $em->remove($idioma);
             $flush = $em->flush();
             if($flush == null){
