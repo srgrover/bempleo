@@ -133,7 +133,7 @@ class RegisterType extends AbstractType
             ])
             ->add('email', TextType::class, [
                 'label' => 'Email',
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'form-email'
                 ]
@@ -277,7 +277,15 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'class' => 'form-foto form-control'
                 ]
+            ])
+            ->add('sobreMi', TextareaType::class, [
+                'label' => 'Sobre mí',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Descríbete aquí. Cuenta algo sobre ti'
+                ]
             ]);
+
     }
     /**
      * Returns the name of this type.

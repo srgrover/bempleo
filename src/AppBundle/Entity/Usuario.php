@@ -173,12 +173,15 @@ class Usuario implements UserInterface{
     private $fax;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      *
      * @Assert\Email(
      *     message="El email '{{ value }} no es válido'",
      *     checkMX=true
+     * )
+     * @Assert\NotBlank(
+     *     message="El email es importante para recuperar la contraseña en caso de olvidarla"
      * )
      */
     private $email;
@@ -268,6 +271,12 @@ class Usuario implements UserInterface{
      * @var string
      */
     private $pref_ocupacion;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $sobre_mi = "El usuario no ha añadido una descripción";
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Formacion", mappedBy="usuario")
@@ -918,5 +927,22 @@ class Usuario implements UserInterface{
     {
         $this->admin = $admin;
     }
+
+    /**
+     * @return string
+     */
+    public function getSobreMi(): string
+    {
+        return $this->sobre_mi;
+    }
+
+    /**
+     * @param string $sobre_mi
+     */
+    public function setSobreMi(string $sobre_mi)
+    {
+        $this->sobre_mi = $sobre_mi;
+    }
+
 
 }

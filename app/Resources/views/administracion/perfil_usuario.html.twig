@@ -40,7 +40,7 @@
                             <div class="media-body">
                                 <hr>
                                 <h3><strong>Bio</strong></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel gravida metus, non ultrices sapien. Morbi odio metus, dapibus non nibh id amet.</p>
+                                <p>{{ usuario.sobreMi }}</p>
                                 <hr>
                                 <h3><strong>Location</strong></h3>
                                 <p>Earth</p>
@@ -89,23 +89,23 @@
                         </span>
                         <br><br><hr>
                         <span class="pull-left">
-                            <a class="btn btn-link" style="text-decoration:none;">
+                            <a class="btn btn-link" style="text-decoration:none;" href="#formacion">
                                 <i class="fa fa-fw fa-book" aria-hidden="true"></i>
                                 Formación <span class="badge">{{ formacion|length }}</span>
                             </a>
-                            <a class="btn btn-link" style="text-decoration:none;">
+                            <a class="btn btn-link" style="text-decoration:none;" href="#complementaria">
                                 <i class="fa fa-fw fa-picture-o" aria-hidden="true"></i>
                                 Complementaria <span class="badge">{{ complementaria|length }}</span>
                             </a>
-                            <a class="btn btn-link" style="text-decoration:none;">
+                            <a class="btn btn-link" style="text-decoration:none;" href="#laboral">
                                 <i class="fa fa-fw fa-users" aria-hidden="true"></i>
                                 Laboral <span class="badge">{{ laboral|length }}</span>
                             </a>
-                            <a class="btn btn-link" style="text-decoration:none;">
+                            <a class="btn btn-link" style="text-decoration:none;" href="#idiomas">
                                 <i class="fa fa-fw fa-users" aria-hidden="true"></i>
                                 Informática <span class="badge">{{ informatica|length }}</span>
                             </a>
-                            <a class="btn btn-link" style="text-decoration:none;">
+                            <a class="btn btn-link" style="text-decoration:none;" href="#informatica">
                                 <i class="fa fa-fw fa-users" aria-hidden="true"></i>
                                 Idiomas <span class="badge">{{ idiomas|length }}</span>
                             </a>
@@ -121,16 +121,18 @@
                             <span class="btn btn-link" style="text-decoration:none;">
                                 <i class="fa fa-lg fa-address-card" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ usuario.domicilio }}"></i>
                             </span>
+                                <i id="formacion"></i>
                         </span>
                     </div>
                 </div>
                 <hr>
 
                 {# FORMACIÓN #}
+
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>
-                            <a href="#" style="text-decoration:none;">
+                            <a style="text-decoration:none;">
                                 <strong>
                                     <i class="fa fa-book"></i>
                                     FORMACIÓN
@@ -190,6 +192,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Añadir
                                 </a>
+                                <i id="complementaria"></i>
                             </div>
                             <br>
                         </div>
@@ -260,6 +263,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Añadir
                                 </a>
+                                <i id="laboral"></i>
                             </div>
                             <br>
                         </div>
@@ -354,6 +358,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Añadir
                                 </a>
+                                <i id="idiomas"></i>
                             </div>
                             <br>
                         </div>
@@ -428,6 +433,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Añadir
                                 </a>
+                                <i id="informatica"></i>
                             </div>
                             <br>
                         </div>
