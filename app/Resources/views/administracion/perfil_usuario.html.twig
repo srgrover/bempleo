@@ -39,17 +39,41 @@
                             </div>
                             <div class="media-body">
                                 <hr>
-                                <h3><strong>Bio</strong></h3>
+                                <h3><strong>Descripción</strong></h3>
                                 <p>{{ usuario.sobreMi }}</p>
                                 <hr>
-                                <h3><strong>Location</strong></h3>
-                                <p>Earth</p>
+                                <h3><strong>Dirección</strong></h3>
+                                <p>{{ usuario.domicilio }}</p>
+                                <p>{{ usuario.poblacion }}, {{ usuario.codPostal }} ({{ usuario.provincia }})</p>
+                                <p>{{ usuario.pais }}</p>
                                 <hr>
-                                <h3><strong>Gender</strong></h3>
-                                <p>Unknown</p>
+                                <h3><strong>Género</strong></h3>
+                                <p>{% if usuario.sexo == "H" %}Hombre{% else %}Mujer{% endif %}</p>
+                                <p>{{ usuario.estadoCivil }} {% if usuario.hijos %}con hijos{% else %}sin hijos{% endif %}</p>
                                 <hr>
-                                <h3><strong>Birthday</strong></h3>
-                                <p>January 01 1901</p>
+                                <h3><strong>Nacimiento</strong></h3>
+                                <p>{{ usuario.fechaNac|date('D d \\d\\e F \\d\\e Y') }}</p>
+                                <hr>
+                                <h3><strong>Información</strong></h3>
+                                <p>{{ usuario.nombre }} {{ usuario.apellidos }}</p>
+                                <p>{{ usuario.tipoDoc }}: {{ usuario.numIdenti }}</p>
+                                <p><strong>Nivel académico:</strong> {{ usuario.nivelAcademico }}</p>
+                                <hr>
+                                <h3><strong>Contacto</strong></h3>
+                                <p>{{ usuario.email }}</p>
+                                <p>Teléfono: {{ usuario.telefono }}</p>
+                                {% if usuario.movil != null %}<p>Teléfono 2: {{ usuario.movil }}</p>{% endif %}
+                                {% if usuario.fax != null %}<p>Fax: {{ usuario.fax }}</p>{% endif %}
+                                <hr>
+                                <h3><strong>Desplazamiento</strong></h3>
+                                <p>{% if usuario.carneConducir %}Carné de conducir de clase {{ usuario.claseCarne }}{% else %}Sin carné de conducir{% endif %}</p>
+                                <p>{% if usuario.vehiculoPropio %}Tiene{% else %}No tiene{% endif %} vehiculo propio</p>
+                                <p><strong>Cambio de domicilio: </strong> {{ usuario.dispCambioDomicilio }}</p>
+                                <p><strong>Disponibilidad para viajar:</strong> {% if usuario.dispViajar %}Sí{% else %}No{% endif %}</p>
+                                <hr>
+                                <h3><strong>Laboral</strong></h3>
+                                <p>{{ usuario.situLaboral }}</p>
+                                <p><strong>Preferencias:</strong> {{ usuario.prefOcupacion }}</p>
                             </div>
                         </div>
                     </div>
@@ -61,16 +85,16 @@
                         <span>
                             <h1 class="panel-title pull-left" style="font-size:30px;">
                                 {{ usuario.nombre }} {{ usuario.apellidos }}
-                                <small>{{ usuario.email }}</small>
+                                <small><small>{{ usuario.email }}</small></small>
                             </h1>
                             <div class="dropdown pull-right">
                                 <a href="{{ path('perfil') }}"><i class="fa fa-angle-left"></i>&nbsp;Volver</a>
-                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuAdministracion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <i class="fa fa-cog"></i>
                                     Administrar
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuAdministracion">
                                     <li>
                                         <a href="{{ path('editar_usuario', {'id' : usuario.id}) }}" class="link-edit">
                                             <i class="fa fa-edit"></i>
@@ -188,10 +212,7 @@
                         <hr>
                         <div>
                             <div class="pull-right btn-group">
-                                <a href="{{ path('add_formacion_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Añadir
-                                </a>
+                                <span class="label label-warning">El administrador no tiene por qué conocer formaciones de usuarios, por tanto no podrá añadirlas</span>
                                 <i id="complementaria"></i>
                             </div>
                             <br>
@@ -203,7 +224,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>
-                            <a href="#" style="text-decoration:none;">
+                            <a style="text-decoration:none;">
                                 <strong>
                                     <i class="fa fa-book"></i>
                                     FORMACIÓN COMPLEMENTARIA
@@ -259,10 +280,7 @@
                         <hr>
                         <div>
                             <div class="pull-right btn-group">
-                                <a href="{{ path('add_complementaria_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Añadir
-                                </a>
+                                <span class="label label-warning">El administrador no tiene por qué conocer formaciones de usuarios, por tanto no podrá añadirlas</span>
                                 <i id="laboral"></i>
                             </div>
                             <br>
@@ -274,7 +292,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>
-                            <a href="#" style="text-decoration:none;">
+                            <a style="text-decoration:none;">
                                 <strong>
                                     <i class="fa fa-building"></i>
                                     EXPERIENCIA LABORAL
@@ -354,10 +372,7 @@
                         <hr>
                         <div>
                             <div class="pull-right btn-group">
-                                <a href="{{ path('add_laboral_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Añadir
-                                </a>
+                                <span class="label label-warning">El administrador no tiene por qué conocer experiencia laboral de usuarios, por tanto no podrá añadirlas</span>
                                 <i id="idiomas"></i>
                             </div>
                             <br>
@@ -369,7 +384,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>
-                            <a href="#" style="text-decoration:none;">
+                            <a style="text-decoration:none;">
                                 <strong>
                                     <i class="fa fa-building"></i>
                                     IDIOMAS
@@ -429,10 +444,7 @@
                         <hr>
                         <div>
                             <div class="pull-right btn-group">
-                                <a href="{{ path('add_idioma_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Añadir
-                                </a>
+                                <span class="label label-warning">El administrador no tiene por qué conocer idiomas de usuarios, por tanto no podrá añadirlos</span>
                                 <i id="informatica"></i>
                             </div>
                             <br>
@@ -444,7 +456,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>
-                            <a href="#" style="text-decoration:none;">
+                            <a style="text-decoration:none;">
                                 <strong>
                                     <i class="fa fa-building"></i>
                                     INFORMÁTICA
@@ -502,10 +514,7 @@
                         <hr>
                         <div>
                             <div class="pull-right btn-group">
-                                <a href="{{ path('add_informatica_usuario', {'usuario' : usuario.id}) }}" class="btn btn-success">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Añadir
-                                </a>
+                                <span class="label label-warning">El administrador no tiene por qué saber el conocimiento de informática de usuarios, por tanto no podrá añadirlos</span>
                             </div>
                             <br>
                         </div>

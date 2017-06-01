@@ -150,19 +150,16 @@ class UsuarioController extends Controller
      * @Route("/editar/formacion/{id}", name="editar_formacion", methods={"GET", "POST"})
      * @param Request $request
      * @param Formacion|null $formacion
-     * @param Usuario|null $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroFormacionAction(Request $request, Formacion $formacion = null, Usuario $usuario = null){
+    public function RegistroFormacionAction(Request $request, Formacion $formacion = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
 
         if (null == $formacion) {
             $formacion = new Formacion();
-            if($usuario == null){
-                $usuario = $this->getUser();
-            }
+            $usuario = $this->getUser();
             $formacion->setUsuario($usuario);
             $em->persist($formacion);
         }
@@ -193,18 +190,15 @@ class UsuarioController extends Controller
      * @Route("/editar/formacion/complementaria/{id}", name="editar_complementaria", methods={"GET", "POST"})
      * @param Request $request
      * @param Fcomplementaria|null $fcomplementaria
-     * @param Usuario|null $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroComplementariaAction(Request $request, Fcomplementaria $fcomplementaria = null, Usuario $usuario = null){
+    public function RegistroComplementariaAction(Request $request, Fcomplementaria $fcomplementaria = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $fcomplementaria) {
             $fcomplementaria = new Fcomplementaria();
-            if($usuario == null){
-                $usuario = $this->getUser();
-            }
+            $usuario = $this->getUser();
             $fcomplementaria->setUsuario($usuario);
             $em->persist($fcomplementaria);
         }
@@ -236,15 +230,13 @@ class UsuarioController extends Controller
      * @param Laboral|null $laboral
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroLaboralAction(Request $request, Laboral $laboral = null, Usuario $usuario = null){
+    public function RegistroLaboralAction(Request $request, Laboral $laboral = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $laboral) {
             $laboral = new Laboral();
-            if($usuario == null){
-                $usuario = $this->getUser();
-            }
+            $usuario = $this->getUser();
             $laboral->setUsuario($usuario);
             $em->persist($laboral);
         }
@@ -276,15 +268,13 @@ class UsuarioController extends Controller
      * @param Idioma|null $idioma
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroIdiomasAction(Request $request, Idioma $idioma = null, Usuario $usuario = null){
+    public function RegistroIdiomasAction(Request $request, Idioma $idioma = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $idioma) {
             $idioma = new Idioma();
-            if($usuario == null){
-                $usuario = $this->getUser();
-            }
+            $usuario = $this->getUser();
             $idioma->setUsuario($usuario);
             $em->persist($idioma);
         }
@@ -309,23 +299,19 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/añadir/informatica/{usuario}", name="add_informatica_usuario", methods={"GET", "POST"})
      * @Route("/añadir/informatica", name="add_informatica", methods={"GET", "POST"})
      * @Route("/editar/informatica/{id}", name="editar_informatica", methods={"GET", "POST"})
      * @param Request $request
      * @param Informatica|null $informatica
-     * @param Usuario|null $usuario
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function RegistroInformaticaAction(Request $request, Informatica $informatica = null, Usuario $usuario = null){
+    public function RegistroInformaticaAction(Request $request, Informatica $informatica = null){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if (null == $informatica) {
             $informatica = new Informatica();
-            if($usuario == null){
-                $usuario = $this->getUser();
-            }
+            $usuario = $this->getUser();
             $informatica->setUsuario($usuario);
             $em->persist($informatica);
         }
